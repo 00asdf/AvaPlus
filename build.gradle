@@ -92,3 +92,7 @@ task prepareAssets(type: Copy) {
 }
 
 classes.dependsOn(prepareAssets)
+
+sourceSets {
+    main { output.resourcesDir = output.classesDir }
+}
