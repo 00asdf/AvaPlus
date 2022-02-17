@@ -1,3 +1,6 @@
 {
-  "parent": "avaplus:block/block_test"
+  "parent": "avaplus:block/block_test",
+  "textures": {
+    "all": "avaplus:blocks/block_test"
+  }
 }
