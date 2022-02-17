@@ -20,6 +20,14 @@ compileJava {
     sourceCompatibility = targetCompatibility = '1.8'
 }
 
+repositories {
+    // repo for avaritia
+    maven {
+        name = "Covers"
+        url = "http://maven.covers1624.net/"
+    }
+}
+
 minecraft {
     version = "1.12.2-14.23.5.2836"
     runDir = "run"
@@ -55,6 +63,9 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
+    deobfCompile("morph.avaritia:Avaritia:1.12-+:universal") {
+        transitive = false
+    }
 }
 
 processResources {
