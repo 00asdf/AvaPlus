@@ -1,0 +1,17 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "avaplus:replicator",
+    "textures": {
+      "all": "avaplus:blocks/replicator"
+    }
+  },
+  "variants": {
+    "normal": {
+      "model": "avaplus:replicator",
+      "textures": {
+        "all": "avaplus:blocks/replicator"
+      }
+    }
+  }
+}

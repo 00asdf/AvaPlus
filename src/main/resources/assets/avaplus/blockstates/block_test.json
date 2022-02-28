@@ -1,5 +1,17 @@
 {
+  "forge_marker": 1,
+  "defaults": {
+    "model": "avaplus:block_test",
+    "textures": {
+      "all": "avaplus:blocks/block_test"
+    }
+  },
   "variants": {
-    "normal": { "model": "avaplus:block_test" }
+    "normal": {
+      "model": "avaplus:block_test",
+      "textures": {
+        "all": "avaplus:blocks/block_test"
+      }
+    }
   }
 }
