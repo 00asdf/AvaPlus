@@ -12,5 +12,5 @@ public class BlockInit {
     public static final List<Block> BLOCK_LIST = new ArrayList<>();
 
     public static final Block BLOCK_TEST = new BlockBase("block_test", Material.IRON);
-    public static final Block REPLICATOR = new BlockReplicator("replicator");
+    //public static final Block REPLICATOR = new BlockReplicator("replicator");
 }

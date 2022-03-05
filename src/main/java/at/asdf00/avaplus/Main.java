@@ -13,7 +13,8 @@ import org.apache.logging.log4j.Logger;
 @Mod(modid = References.MODID, name = References.NAME, version = References.VERSION, dependencies = References.DEPENDENCIES, useMetadata = true)
 public class Main {
 
-    private static Logger logger;
+    // will be private later
+    public static Logger logger;
 
 
     @Instance

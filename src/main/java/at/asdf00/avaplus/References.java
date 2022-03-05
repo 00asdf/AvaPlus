@@ -7,4 +7,6 @@ public class References {
     public static final String DEPENDENCIES = "required-after:avaritia@[3.2,);";
     public static final String CLIENT = "at.asdf00.avaplus.proxy.ClientProxy";
     public static final String SERVER = "at.asdf00.avaplus.proxy.CommonProxy";
+
+    public static final int GUI_REPLICATOR = 0;
 }
