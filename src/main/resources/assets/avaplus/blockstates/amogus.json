@@ -1,0 +1,13 @@
+{
+    "variants": 
+    {
+        "burning=false,facing=north": { "model": "avaplus:amogus" },
+        "burning=false,facing=east": { "model": "avaplus:amogus", "y": 90 },
+        "burning=false,facing=south": { "model": "avaplus:amogus", "y": 180 },
+        "burning=false,facing=west": { "model": "avaplus:amogus", "y": 270 },
+        "burning=true,facing=north": { "model": "avaplus:act_amogus" },
+        "burning=true,facing=east": { "model": "avaplus:act_amogus", "y": 90 },
+        "burning=true,facing=south": { "model": "avaplus:act_amogus", "y": 180 },
+        "burning=true,facing=west": { "model": "avaplus:act_amogus", "y":270  }
+    }
+}

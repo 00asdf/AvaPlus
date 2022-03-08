@@ -1,0 +1,12 @@
+{
+    "parent": "block/orientable",
+    "textures": {
+        "particle": "avaplus:blocks/amogus_side",
+        "up": "avaplus:blocks/amogus_side",
+        "down": "avaplus:blocks/amogus_side",
+        "north": "avaplus:blocks/amogus_front_off",
+        "east": "avaplus:blocks/amogus_side",
+        "south": "avaplus:blocks/amogus_side",
+        "west": "avaplus:blocks/amogus_side"
+    }
+}

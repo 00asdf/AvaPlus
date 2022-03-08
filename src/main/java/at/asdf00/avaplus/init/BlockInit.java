@@ -1,5 +1,6 @@
 package at.asdf00.avaplus.init;
 
+import at.asdf00.avaplus.objects.blocks.BlockAmogus;
 import at.asdf00.avaplus.objects.blocks.BlockBase;
 import at.asdf00.avaplus.objects.blocks.BlockReplicator;
 import net.minecraft.block.Block;
@@ -13,4 +14,5 @@ public class BlockInit {
 
     public static final Block BLOCK_TEST = new BlockBase("block_test", Material.IRON);
     //public static final Block REPLICATOR = new BlockReplicator("replicator");
+    public static final Block BLOCK_AMOGUS= new BlockAmogus("block_amogus");
 }
