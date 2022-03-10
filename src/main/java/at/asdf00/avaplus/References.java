@@ -9,5 +9,5 @@ public class References {
     public static final String SERVER = "at.asdf00.avaplus.proxy.CommonProxy";
 
     public static final int GUI_REPLICATOR = 0;
-    public static final int GUI_AMOGUS = 1;
+    public static final int AMOGUI = 0;
 }

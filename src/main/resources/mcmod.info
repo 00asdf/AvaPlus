@@ -5,12 +5,12 @@
   "description": "extension for Avaritia",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "",
+  "url": "https://github.com/00asdf/AvaPlus",
   "updateUrl": "",
   "authorList": ["00asdf", "GHXX"],
   "credits": "asdfasdfasdfasdfasdf",
   "logoFile": "",
   "screenshots": [],
-  "dependencies": []
+  "dependencies": ["Avaritia"]
 }
 ]

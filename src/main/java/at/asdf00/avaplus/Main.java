@@ -1,5 +1,6 @@
 package at.asdf00.avaplus;
 
+import at.asdf00.avaplus.util.handlers.RegistryHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.*;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -29,7 +30,7 @@ public class Main {
     }
     @EventHandler
     public static void init(FMLInitializationEvent e) {
-
+        RegistryHandler.initRegistries(e);
     }
     @EventHandler
     public static void postInit(FMLPostInitializationEvent e) {

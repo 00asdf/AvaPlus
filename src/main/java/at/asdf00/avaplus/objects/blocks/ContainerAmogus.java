@@ -1,6 +1,7 @@
 package at.asdf00.avaplus.objects.blocks;
 
 
+import at.asdf00.avaplus.Main;
 import at.asdf00.avaplus.objects.blocks.tileentities.TileEntityAmogus;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -14,7 +15,7 @@ import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerAmogus extends Container {
     private final TileEntityAmogus tileentity;
-    private int cookTime, energy;
+    private int rfConsumed, energy;
 
     public ContainerAmogus(InventoryPlayer player, TileEntityAmogus tileentity)
     {
@@ -22,8 +23,7 @@ public class ContainerAmogus extends Container {
         IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 
         this.addSlotToContainer(new SlotItemHandler(handler, 0, 44, 21));
-        this.addSlotToContainer(new SlotItemHandler(handler, 1, 44, 50));
-        this.addSlotToContainer(new SlotItemHandler(handler, 2, 97, 36));
+        this.addSlotToContainer(new SlotItemHandler(handler, 1, 97, 36));
 
         for(int y = 0; y < 3; y++)
         {
@@ -60,17 +60,24 @@ public class ContainerAmogus extends Container {
         {
             IContainerListener listener = (IContainerListener)this.listeners.get(i);
 
-            if(this.cookTime != this.tileentity.getField(0)) listener.sendWindowProperty(this, 0, this.tileentity.getField(0));
-            if(this.energy != this.tileentity.getField(1)) listener.sendWindowProperty(this, 1, this.tileentity.getField(1));
+            if(rfConsumed != this.tileentity.getField(0)) listener.sendWindowProperty(this, 0, this.tileentity.getField(0));
+            //if(energy != this.tileentity.getField(1)) listener.sendWindowProperty(this, 1, this.tileentity.getField(1));
         }
 
-        this.cookTime = this.tileentity.getField(0);
-        this.energy = this.tileentity.getField(1);
+        this.rfConsumed = this.tileentity.getField(0);
+        //this.energy = this.tileentity.getField(1);
     }
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
-    { /*
+    {
+        ItemStack stack = ItemStack.EMPTY;
+        Slot slot = inventorySlots.get(index);
+        if (slot != null && slot.getHasStack()) {
+            Main.logger.info("trying slot transfer");
+            // TODO: transfer item to input slot and reject attempted transfers to output slot
+        }
+        /*
         ItemStack stack = ItemStack.EMPTY;
         Slot slot = (Slot)this.inventorySlots.get(index);
 

@@ -36,13 +36,13 @@ public class BlockAmogus extends BlockBase {
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
-        return Item.getItemFromBlock(BlockInit.BLOCK_AMOGUS);
+        return Item.getItemFromBlock(BlockInit.AMOGUS);
     }
 
     @Override
     public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state)
     {
-        return new ItemStack(BlockInit.BLOCK_AMOGUS);
+        return new ItemStack(BlockInit.AMOGUS);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class BlockAmogus extends BlockBase {
         if(!worldIn.isRemote)
         {
             Main.logger.info("tried opening amogui");
-            playerIn.openGui(Main.instance, References.GUI_AMOGUS, worldIn, pos.getX(), pos.getY(), pos.getZ());
+            playerIn.openGui(Main.instance, References.AMOGUI, worldIn, pos.getX(), pos.getY(), pos.getZ());
         }
 
         return true;
@@ -82,8 +82,8 @@ public class BlockAmogus extends BlockBase {
         IBlockState state = worldIn.getBlockState(pos);
         TileEntity tileentity = worldIn.getTileEntity(pos);
 
-        if(active) worldIn.setBlockState(pos, BlockInit.BLOCK_AMOGUS.getDefaultState().withProperty(FACING, state.getValue(FACING)).withProperty(BURNING, true), 3);
-        else worldIn.setBlockState(pos, BlockInit.BLOCK_AMOGUS.getDefaultState().withProperty(FACING, state.getValue(FACING)).withProperty(BURNING, false), 3);
+        if(active) worldIn.setBlockState(pos, BlockInit.AMOGUS.getDefaultState().withProperty(FACING, state.getValue(FACING)).withProperty(BURNING, true), 3);
+        else worldIn.setBlockState(pos, BlockInit.AMOGUS.getDefaultState().withProperty(FACING, state.getValue(FACING)).withProperty(BURNING, false), 3);
 
         if(tileentity != null)
         {
