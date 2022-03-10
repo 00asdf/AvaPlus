@@ -9,7 +9,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiAmogus extends GuiContainer {
-    private static final ResourceLocation TEXTURES = new ResourceLocation(References.MODID + ":textures/gui/amogus.png");
+    private static final ResourceLocation TEXTURES = new ResourceLocation(References.MODID + ":textures/gui/amogusOLD.png");
     private final InventoryPlayer player;
     private final TileEntityAmogus tileentity;
 

@@ -1,0 +1,10 @@
+-> amogui
+  - new png
+  - progress bar
+  - progress as string (percentage)
+-> verify energy stuff
+-> piping/hoppering
+-> static active detection (maybe similar to electric sintering furnace)
+-> get item texture working
+
+-> code cleanup

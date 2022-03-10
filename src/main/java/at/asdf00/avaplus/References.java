@@ -10,4 +10,6 @@ public class References {
 
     public static final int GUI_REPLICATOR = 0;
     public static final int AMOGUI = 0;
+
+    public static final boolean _DEBUGMODE = true;
 }

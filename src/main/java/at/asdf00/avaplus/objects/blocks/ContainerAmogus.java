@@ -2,6 +2,8 @@ package at.asdf00.avaplus.objects.blocks;
 
 
 import at.asdf00.avaplus.Main;
+import at.asdf00.avaplus.objects.blocks.slots.SlotHandlerAmogusIn;
+import at.asdf00.avaplus.objects.blocks.slots.SlotHandlerAmogusOut;
 import at.asdf00.avaplus.objects.blocks.tileentities.TileEntityAmogus;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -11,124 +13,80 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerAmogus extends Container {
     private final TileEntityAmogus tileentity;
-    private int rfConsumed, energy;
+    private int rfConsumed;
 
-    public ContainerAmogus(InventoryPlayer player, TileEntityAmogus tileentity)
-    {
+    public ContainerAmogus(InventoryPlayer player, TileEntityAmogus tileentity) {
         this.tileentity = tileentity;
         IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 
-        this.addSlotToContainer(new SlotItemHandler(handler, 0, 44, 21));
-        this.addSlotToContainer(new SlotItemHandler(handler, 1, 97, 36));
+        // replicator slots
+        addSlotToContainer(new SlotHandlerAmogusIn(handler, 0, 44, 21));
+        addSlotToContainer(new SlotHandlerAmogusOut(handler, 1, 97, 36));
 
-        for(int y = 0; y < 3; y++)
-        {
-            for(int x = 0; x < 9; x++)
-            {
-                this.addSlotToContainer(new Slot(player, x + y*9 + 9, 8 + x*18, 84 + y*18));
-            }
+        // hotbar slots
+        for(int x = 0; x < 9; x++) {
+            this.addSlotToContainer(new Slot(player, x, 8 + x * 18, 142));
         }
 
-        for(int x = 0; x < 9; x++)
-        {
-            this.addSlotToContainer(new Slot(player, x, 8 + x * 18, 142));
+        // player inventory slots
+        for(int y = 0; y < 3; y++) {
+            for(int x = 0; x < 9; x++) {
+                addSlotToContainer(new Slot(player, x + y*9 + 9, 8 + x*18, 84 + y*18));
+            }
         }
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer playerIn)
-    {
+    public boolean canInteractWith(EntityPlayer playerIn) {
         return this.tileentity.isUsableByPlayer(playerIn);
     }
 
     @Override
-    public void updateProgressBar(int id, int data)
-    {
+    public void updateProgressBar(int id, int data) {
         this.tileentity.setField(id, data);
     }
 
     @Override
-    public void detectAndSendChanges()
-    {
+    public void detectAndSendChanges() {
         super.detectAndSendChanges();
-
-        for(int i = 0; i < this.listeners.size(); ++i)
-        {
+        for(int i = 0; i < listeners.size(); ++i) {
             IContainerListener listener = (IContainerListener)this.listeners.get(i);
-
-            if(rfConsumed != this.tileentity.getField(0)) listener.sendWindowProperty(this, 0, this.tileentity.getField(0));
-            //if(energy != this.tileentity.getField(1)) listener.sendWindowProperty(this, 1, this.tileentity.getField(1));
+            if(rfConsumed != tileentity.getField(0)) listener.sendWindowProperty(this, 0, tileentity.getField(0));
         }
-
-        this.rfConsumed = this.tileentity.getField(0);
-        //this.energy = this.tileentity.getField(1);
+        rfConsumed = tileentity.getField(0);
     }
 
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
-    {
+    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
         ItemStack stack = ItemStack.EMPTY;
         Slot slot = inventorySlots.get(index);
         if (slot != null && slot.getHasStack()) {
-            Main.logger.info("trying slot transfer");
-            // TODO: transfer item to input slot and reject attempted transfers to output slot
-        }
-        /*
-        ItemStack stack = ItemStack.EMPTY;
-        Slot slot = (Slot)this.inventorySlots.get(index);
-
-        if(slot != null && slot.getHasStack())
-        {
-            ItemStack stack1 = slot.getStack();
-            stack = stack1.copy();
-
-            if(index == 2)
-            {
-                if(!this.mergeItemStack(stack1, 4, 40, true)) return ItemStack.EMPTY;
-                slot.onSlotChange(stack1, stack);
-            }
-            else if(index != 2 && index != 1 && index != 0)
-            {
-                Slot slot1 = (Slot)this.inventorySlots.get(index + 1);
-
-                if(!SinteringFurnaceRecipes.getInstance().getSinteringResult(stack1, slot1.getStack()).isEmpty())
-                {
-                    if(!this.mergeItemStack(stack1, 0, 2, false))
-                    {
+            ItemStack transferSt = slot.getStack();
+            stack = transferSt.copy();
+            if (index < 2) {    // transfer from replicator to player
+                if (!mergeItemStack(transferSt, 2, inventorySlots.size(), false))
+                    return ItemStack.EMPTY;
+                slot.onSlotChange(transferSt, stack);
+            } else {    // transfer into replicator
+                if (transferSt.getItem().getRegistryName().toString().equals("avaritia:singularity")) {
+                    if (!mergeItemStack(transferSt, 0, 1, false))
                         return ItemStack.EMPTY;
-                    }
-                    else if(index >= 4 && index < 31)
-                    {
-                        if(!this.mergeItemStack(stack1, 31, 40, false)) return ItemStack.EMPTY;
-                    }
-                    else if(index >= 31 && index < 40 && !this.mergeItemStack(stack1, 4, 31, false))
-                    {
-                        return ItemStack.EMPTY;
-                    }
+                    slot.onSlotChange(transferSt, stack);
+                } else {
+                    return ItemStack.EMPTY;
                 }
             }
-            else if(!this.mergeItemStack(stack1, 4, 40, false))
-            {
-                return ItemStack.EMPTY;
-            }
-            if(stack1.isEmpty())
-            {
+            if(transferSt.isEmpty())
                 slot.putStack(ItemStack.EMPTY);
-            }
             else
-            {
                 slot.onSlotChanged();
-
-            }
-            if(stack1.getCount() == stack.getCount()) return ItemStack.EMPTY;
-            slot.onTake(playerIn, stack1);
+            if(transferSt.getCount() == stack.getCount())
+                return ItemStack.EMPTY;
+            slot.onTake(playerIn, transferSt);
         }
         return stack;
-        */
-        return ItemStack.EMPTY;
     }
 }

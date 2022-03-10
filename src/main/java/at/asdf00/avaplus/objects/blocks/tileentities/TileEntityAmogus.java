@@ -1,6 +1,7 @@
 package at.asdf00.avaplus.objects.blocks.tileentities;
 
 import at.asdf00.avaplus.Main;
+import at.asdf00.avaplus.References;
 import at.asdf00.avaplus.objects.blocks.BlockAmogus;
 import at.asdf00.avaplus.objects.blocks.energy.CustomEnergyStorage;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,7 +16,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -24,7 +24,7 @@ public class TileEntityAmogus extends TileEntity implements ITickable {
     public ItemStackHandler handler = new ItemStackHandler(2);
     private String customName;
 
-    private static final boolean _debugSelfFueling = true;
+    private static final boolean _debugSelfFueling = References._DEBUGMODE;
     public static final long rfToReplicate = Integer.MAX_VALUE;
 
     public int energy = storage.getEnergyStored();
@@ -69,26 +69,35 @@ public class TileEntityAmogus extends TileEntity implements ITickable {
 
     @Override
     public void update() {
-        if (_debugSelfFueling && world.isBlockPowered(pos)) {
-            energy += Math.min(energy + Integer.MAX_VALUE >> 8, Integer.MAX_VALUE);
+        if (_debugSelfFueling) {
+            if (world.isBlockPowered(pos))
+                energy = energy + (Integer.MAX_VALUE >> 4) < 0 ? Integer.MAX_VALUE : energy + (Integer.MAX_VALUE >> 4);
+        }
+
+        if (handler.getStackInSlot(0).isEmpty()) {
+            rfConsumed = 0;
+            return;
         }
         if (energy > 0 &&
-                handler.getStackInSlot(0).isItemEqual(new ItemStack(Item.getByNameOrId("avaritia:singularity"))) &&
-                handler.getStackInSlot(1).getCount() < handler.getSlotLimit(1) - 1) {
+                handler.getStackInSlot(0).getItem().getRegistryName().toString().equals("avaritia:singularity") &&
+                handler.getStackInSlot(1).getCount() < handler.getStackInSlot(1).getMaxStackSize() - 1 &&
+                (handler.getStackInSlot(1).isEmpty() || handler.getStackInSlot(0).isItemEqual(handler.getStackInSlot(1)))) {
             active = true;
             rfConsumed += energy;
             energy = 0;
         } else {
             active = false;
         }
-        if (rfConsumed >= rfToReplicate) {
+        if (rfConsumed >= rfToReplicate && handler.getStackInSlot(1).getCount() < handler.getStackInSlot(1).getMaxStackSize() - 1) {
             if (ItemStack.areItemsEqual(handler.getStackInSlot(0), handler.getStackInSlot(1))) {
                 handler.getStackInSlot(1).grow(2);
                 handler.getStackInSlot(0).shrink(1);
+                rfConsumed = 0;
             } else if (handler.getStackInSlot(1).isEmpty()) {
                 handler.setStackInSlot(1, handler.getStackInSlot(0).copy());
-                handler.getStackInSlot(1).grow(1);
+                handler.getStackInSlot(1).setCount(2);
                 handler.getStackInSlot(0).shrink(1);
+                rfConsumed = 0;
             }
         }
 
@@ -96,8 +105,6 @@ public class TileEntityAmogus extends TileEntity implements ITickable {
             markDirty();
         }
     }
-
-
 
     public int getEnergyStored() {
         return storage.getEnergyStored();
