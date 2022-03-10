@@ -70,7 +70,7 @@ public class ContainerAmogus extends Container {
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
-    {
+    { /*
         ItemStack stack = ItemStack.EMPTY;
         Slot slot = (Slot)this.inventorySlots.get(index);
 
@@ -121,5 +121,7 @@ public class ContainerAmogus extends Container {
             slot.onTake(playerIn, stack1);
         }
         return stack;
+        */
+        return ItemStack.EMPTY;
     }
 }

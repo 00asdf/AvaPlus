@@ -32,14 +32,14 @@ public class GuiAmogus extends GuiContainer {
         mc.getTextureManager().bindTexture(TEXTURES);
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 
-        int l = getCookProgressScaled(24);
+        int l = (int) (getCookProgressScaled(24) >> 32);
         drawTexturedModalRect(guiLeft + 63, guiTop + 36, 176, 14, l + 1, 16);
 
         int k = getEnergyStoredScaled(75);
         drawTexturedModalRect(guiLeft + 152, guiTop + 7, 176, 32, 16, 76 - k);
     }
-    private int getCookProgressScaled(int pixels) {
-        int i = tileentity.cookTime;
+    private long getCookProgressScaled(int pixels) {
+        long i = tileentity.rfConsumed;
         return i != 0 ? i * pixels / 100 : 0;
     }
     private int getEnergyStoredScaled(int pixels) {

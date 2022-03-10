@@ -48,8 +48,10 @@ public class BlockAmogus extends BlockBase {
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
+        Main.logger.info("activated amogus");
         if(!worldIn.isRemote)
         {
+            Main.logger.info("tried opening amogui");
             playerIn.openGui(Main.instance, References.GUI_AMOGUS, worldIn, pos.getX(), pos.getY(), pos.getZ());
         }
 
