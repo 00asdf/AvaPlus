@@ -71,12 +71,11 @@ public class TileEntityAmogus extends TileEntity implements ITickable {
     public void update() {
         if (_debugSelfFueling) {
             if (world.isBlockPowered(pos))
-                energy = energy + (Integer.MAX_VALUE >> 4) < 0 ? Integer.MAX_VALUE : energy + (Integer.MAX_VALUE >> 4);
+                energy = energy + (Integer.MAX_VALUE >> 6) < 0 ? Integer.MAX_VALUE : energy + (Integer.MAX_VALUE >> 6);
         }
 
         if (handler.getStackInSlot(0).isEmpty()) {
             rfConsumed = 0;
-            return;
         }
         if (energy > 0 &&
                 handler.getStackInSlot(0).getItem().getRegistryName().toString().equals("avaritia:singularity") &&
@@ -101,6 +100,7 @@ public class TileEntityAmogus extends TileEntity implements ITickable {
             }
         }
 
+
         if (active) {
             markDirty();
         }
@@ -115,10 +115,11 @@ public class TileEntityAmogus extends TileEntity implements ITickable {
     public boolean isUsableByPlayer(EntityPlayer player) {
         return world.getTileEntity(this.pos) != this ? false : player.getDistanceSq((double)this.pos.getX() + 0.5D, (double)this.pos.getY() + 0.5D, (double)this.pos.getZ() + 0.5D) <= 64.0D;
     }
-    public int getField(int id) {
-        if (id == 0)
-            return (int) (rfConsumed >> 32);
-        return -1;
+    public double getProgress() {
+        return (double)rfConsumed / (double)rfToReplicate;
+    }
+    public long getRfConsumed() {
+        return rfConsumed;
     }
     public void setField(int id, int value) {
         if (id == 0)

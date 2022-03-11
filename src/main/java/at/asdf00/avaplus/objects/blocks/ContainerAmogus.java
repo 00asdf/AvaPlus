@@ -21,16 +21,13 @@ public class ContainerAmogus extends Container {
     public ContainerAmogus(InventoryPlayer player, TileEntityAmogus tileentity) {
         this.tileentity = tileentity;
         IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-
         // replicator slots
-        addSlotToContainer(new SlotHandlerAmogusIn(handler, 0, 44, 21));
-        addSlotToContainer(new SlotHandlerAmogusOut(handler, 1, 97, 36));
-
+        addSlotToContainer(new SlotHandlerAmogusIn(handler, 0, 26, 27));
+        addSlotToContainer(new SlotHandlerAmogusOut(handler, 1, 134, 27));
         // hotbar slots
         for(int x = 0; x < 9; x++) {
             this.addSlotToContainer(new Slot(player, x, 8 + x * 18, 142));
         }
-
         // player inventory slots
         for(int y = 0; y < 3; y++) {
             for(int x = 0; x < 9; x++) {
@@ -41,24 +38,21 @@ public class ContainerAmogus extends Container {
 
     @Override
     public boolean canInteractWith(EntityPlayer playerIn) {
-        return this.tileentity.isUsableByPlayer(playerIn);
+        return tileentity.isUsableByPlayer(playerIn);
     }
-
     @Override
     public void updateProgressBar(int id, int data) {
-        this.tileentity.setField(id, data);
+        tileentity.setField(id, data);
     }
-
     @Override
     public void detectAndSendChanges() {
         super.detectAndSendChanges();
         for(int i = 0; i < listeners.size(); ++i) {
-            IContainerListener listener = (IContainerListener)this.listeners.get(i);
-            if(rfConsumed != tileentity.getField(0)) listener.sendWindowProperty(this, 0, tileentity.getField(0));
+            IContainerListener listener = (IContainerListener) listeners.get(i);
+            if(rfConsumed != (int)tileentity.getRfConsumed()) listener.sendWindowProperty(this, 0, (int)tileentity.getRfConsumed());
         }
-        rfConsumed = tileentity.getField(0);
+        rfConsumed = (int)tileentity.getRfConsumed();
     }
-
     @Override
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
         ItemStack stack = ItemStack.EMPTY;
