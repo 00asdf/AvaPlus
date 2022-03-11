@@ -32,10 +32,12 @@ public class BlockAmogus extends BlockBase {
         setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(ACTIVE, false));
     }
 
-    public static void setState(boolean active, World worldIn, BlockPos pos) {
+    public static void setState(Boolean active, EnumFacing facing, World worldIn, BlockPos pos) {
         IBlockState state = worldIn.getBlockState(pos);
         TileEntity tileentity = worldIn.getTileEntity(pos);
-        worldIn.setBlockState(pos, BlockInit.AMOGUS.getDefaultState().withProperty(FACING, state.getValue(FACING)).withProperty(ACTIVE, active), 3);
+        worldIn.setBlockState(pos, BlockInit.AMOGUS.getDefaultState()
+                .withProperty(FACING, facing == null ? state.getValue(FACING) : facing)
+                .withProperty(ACTIVE, active == null ? state.getValue(ACTIVE) : active), 3);
         if(tileentity != null) {
             tileentity.validate();
             worldIn.setTileEntity(pos, tileentity);
@@ -65,7 +67,7 @@ public class BlockAmogus extends BlockBase {
             IBlockState west = worldIn.getBlockState(pos.west());
             IBlockState east = worldIn.getBlockState(pos.east());
             EnumFacing face = (EnumFacing)state.getValue(FACING);
-            worldIn.setBlockState(pos, state.withProperty(FACING, face), 2);
+            setState(null, face, worldIn, pos);
         }
     }
     @Override
@@ -91,8 +93,8 @@ public class BlockAmogus extends BlockBase {
     @Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
         TileEntityAmogus tileentity = (TileEntityAmogus)worldIn.getTileEntity(pos);
-        worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.handler.getStackInSlot(0)));
-        worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.handler.getStackInSlot(1)));
+        worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.handlerIn.getStackInSlot(0)));
+        worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.handlerOut.getStackInSlot(0)));
         super.breakBlock(worldIn, pos, state);
     }
     @Override

@@ -1,6 +1,4 @@
 -> verify energy stuff
--> piping/hoppering
--> static active detection (maybe similar to electric sintering furnace)
 -> get item texture working
 
 -> code cleanup

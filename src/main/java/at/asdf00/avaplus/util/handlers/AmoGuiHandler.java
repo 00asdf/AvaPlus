@@ -22,7 +22,7 @@ public class AmoGuiHandler implements IGuiHandler {
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
     {
         if(ID == References.AMOGUI)
-            return new GuiAmogus(player.inventory, (TileEntityAmogus) world.getTileEntity(new BlockPos(x,y,z)));
+            return new GuiAmogus(player.inventory, (TileEntityAmogus) world.getTileEntity(new BlockPos(x,y,z)), true);
         return null;
     }
 }
