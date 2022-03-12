@@ -1,4 +1,4 @@
 -> get item texture working
--> fix progress bar when rfToReplicate > Integer.MAX_VALUE
+-> können wir das konfigurierbar machen? (rfToReplicate)
 
 -> code cleanup

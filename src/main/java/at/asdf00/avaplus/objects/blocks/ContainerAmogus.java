@@ -1,7 +1,6 @@
 package at.asdf00.avaplus.objects.blocks;
 
 
-import at.asdf00.avaplus.Main;
 import at.asdf00.avaplus.objects.blocks.slots.SlotHandlerAmogusIn;
 import at.asdf00.avaplus.objects.blocks.slots.SlotHandlerAmogusOut;
 import at.asdf00.avaplus.objects.blocks.tileentities.TileEntityAmogus;
@@ -16,7 +15,7 @@ import net.minecraftforge.items.IItemHandler;
 
 public class ContainerAmogus extends Container {
     private final TileEntityAmogus tileentity;
-    private int rfConsumed;
+    private int scaledRfConsumed;
 
     public ContainerAmogus(InventoryPlayer player, TileEntityAmogus tileentity) {
         this.tileentity = tileentity;
@@ -43,15 +42,18 @@ public class ContainerAmogus extends Container {
     @Override
     public void updateProgressBar(int id, int data) {
         tileentity.setField(id, data);
+        if (id == 0)
+            tileentity.setRfConsumedScaled(data);
     }
     @Override
     public void detectAndSendChanges() {
         super.detectAndSendChanges();
         for(int i = 0; i < listeners.size(); ++i) {
-            IContainerListener listener = (IContainerListener) listeners.get(i);
-            if(rfConsumed != (int)tileentity.getRfConsumed()) listener.sendWindowProperty(this, 0, (int)tileentity.getRfConsumed());
+            IContainerListener listener = listeners.get(i);
+            if(scaledRfConsumed != tileentity.getRfConsumedScaled())
+                listener.sendWindowProperty(this, 0, tileentity.getRfConsumedScaled());
         }
-        rfConsumed = (int)tileentity.getRfConsumed();
+        scaledRfConsumed = tileentity.getRfConsumedScaled();
     }
     @Override
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
