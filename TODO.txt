@@ -1,4 +1,4 @@
--> verify energy stuff
 -> get item texture working
+-> fix progress bar when rfToReplicate > Integer.MAX_VALUE
 
 -> code cleanup

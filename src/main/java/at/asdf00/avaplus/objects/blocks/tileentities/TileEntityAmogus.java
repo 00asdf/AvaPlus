@@ -1,10 +1,9 @@
 package at.asdf00.avaplus.objects.blocks.tileentities;
 
-import at.asdf00.avaplus.Main;
 import at.asdf00.avaplus.References;
 import at.asdf00.avaplus.objects.blocks.BlockAmogus;
 import at.asdf00.avaplus.objects.blocks.StackHandlers.ISHout;
-import at.asdf00.avaplus.objects.blocks.energy.CustomEnergyStorage;
+import at.asdf00.avaplus.objects.blocks.energy.EnergyStorageAmogus;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -20,15 +19,14 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
 public class TileEntityAmogus extends TileEntity implements ITickable {
-    private CustomEnergyStorage storage = new CustomEnergyStorage(75000, 20, 0, 0);
+    private final EnergyStorageAmogus storage = new EnergyStorageAmogus(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE);
     public ItemStackHandler handlerIn = new ItemStackHandler(1);
     public ItemStackHandler handlerOut = new ISHout(1);
     private String customName;
 
     private static final boolean _debugSelfFueling = References._DEBUGMODE;
-    public static final long rfToReplicate = Integer.MAX_VALUE;
+    public static final long rfToReplicate = (long)Integer.MAX_VALUE << 1;
 
-    public int energy = storage.getEnergyStored();
     public long rfConsumed;
     public boolean active;
 
@@ -87,7 +85,9 @@ public class TileEntityAmogus extends TileEntity implements ITickable {
     public void update() {
         if (_debugSelfFueling) {
             if (world.isBlockPowered(pos))
-                energy = energy + (Integer.MAX_VALUE >> 6) < 0 ? Integer.MAX_VALUE : energy + (Integer.MAX_VALUE >> 6);
+                storage.receiveEnergy(Integer.MAX_VALUE >> 6, false);
+            //Main.logger.info("energy stored: " + storage.getEnergyStored());
+            //Main.logger.info("energy consumed: " + rfConsumed);
         }
 
         // reset progress if empty (singularity can be swapped mid process
@@ -95,7 +95,7 @@ public class TileEntityAmogus extends TileEntity implements ITickable {
             rfConsumed = 0;
         }
         // only process singularity if there is space in output slot
-        if (energy > 0 &&
+        if (storage.forceExtractEnergy(Integer.MAX_VALUE, true) > 0 &&
                 handlerIn.getStackInSlot(0).getItem().getRegistryName().toString().equals("avaritia:singularity") &&
                 handlerOut.getStackInSlot(0).getCount() < handlerOut.getStackInSlot(0).getMaxStackSize() - 1 &&
                 (handlerOut.getStackInSlot(0).isEmpty() || handlerIn.getStackInSlot(0).isItemEqual(handlerOut.getStackInSlot(0)))) {
@@ -104,8 +104,8 @@ public class TileEntityAmogus extends TileEntity implements ITickable {
             if (lastActive == 0)
                 BlockAmogus.setState(true, null, world, pos);
             lastActive = 15;
-            rfConsumed += energy;
-            energy = 0;
+            rfConsumed += (long)storage.forceExtractEnergy(Integer.MAX_VALUE, false);
+            //energy = 0;
         } else {
             active = false;
             // setting active blockstate (15 ticks delay when deactivating to reduce lag in case of fluctuating power)
@@ -135,14 +135,8 @@ public class TileEntityAmogus extends TileEntity implements ITickable {
         }
     }
 
-    public int getEnergyStored() {
-        return storage.getEnergyStored();
-    }
-    public int getMaxEnergyStored() {
-        return storage.getMaxEnergyStored();
-    }
     public boolean isUsableByPlayer(EntityPlayer player) {
-        return world.getTileEntity(this.pos) != this ? false : player.getDistanceSq((double)this.pos.getX() + 0.5D, (double)this.pos.getY() + 0.5D, (double)this.pos.getZ() + 0.5D) <= 64.0D;
+        return world.getTileEntity(this.pos) == this && player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
     }
     public double getProgress() {
         return (double)rfConsumed / (double)rfToReplicate;
