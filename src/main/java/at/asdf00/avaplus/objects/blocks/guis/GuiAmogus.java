@@ -4,6 +4,8 @@ import at.asdf00.avaplus.Main;
 import at.asdf00.avaplus.References;
 import at.asdf00.avaplus.objects.blocks.ContainerAmogus;
 import at.asdf00.avaplus.objects.blocks.tileentities.TileEntityAmogus;
+import at.asdf00.avaplus.util.CustomConfig;
+import at.asdf00.avaplus.util.ModConfig;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -29,6 +31,8 @@ public class GuiAmogus extends GuiContainer {
         fontRenderer.drawString(player.getDisplayName().getUnformattedText(), 7, ySize - 96 + 2, 0x404040);
         String progress = String.format("%.1f%%", tileentity.getProgress() * 100.0);
         fontRenderer.drawString(progress, (xSize / 2 - fontRenderer.getStringWidth(progress) / 2), 46, 0x404040);
+        String prStr = progressToString();
+        fontRenderer.drawString(prStr, (xSize / 2 - fontRenderer.getStringWidth(prStr) / 2), 56, 0x404040);
     }
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
@@ -44,5 +48,20 @@ public class GuiAmogus extends GuiContainer {
         drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
         renderHoveredToolTip(mouseX, mouseY);
+    }
+
+    private static final String[] si ={"", "k", "M", "G", "T", "P", "E"};
+    private String progressToString() {
+        long cur = ModConfig.AMOGUS_RFTOREPLICATE;
+        int pre = 0;
+        while (cur >= 1000) {
+            cur /= 1000;
+            pre++;
+        }
+        return getScaledAsString(tileentity.getRfConsumed(), pre) + "/ " + getScaledAsString(ModConfig.AMOGUS_RFTOREPLICATE, pre) + si[pre] + "RF";
+    }
+    private String getScaledAsString(long val, int pre) {
+        val /= Math.round(Math.pow(1000, pre)) / 10;
+        return String.format("%d.%d ", val / 10, val % 10);
     }
 }

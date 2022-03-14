@@ -11,6 +11,6 @@ import java.util.List;
 public class BlockInit {
     public static final List<Block> BLOCK_LIST = new ArrayList<>();
 
-    public static final Block BLOCK_TEST = new BlockBase("block_test", Material.IRON);
+    // public static final Block BLOCK_TEST = new BlockBase("block_test", Material.IRON);
     public static final Block AMOGUS = new BlockAmogus("replicator");
 }

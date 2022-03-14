@@ -3,6 +3,7 @@ package at.asdf00.avaplus.objects.blocks.tileentities;
 import at.asdf00.avaplus.Main;
 import at.asdf00.avaplus.References;
 import at.asdf00.avaplus.objects.blocks.BlockAmogus;
+import at.asdf00.avaplus.objects.blocks.StackHandlers.ISHin;
 import at.asdf00.avaplus.objects.blocks.StackHandlers.ISHout;
 import at.asdf00.avaplus.objects.blocks.energy.EnergyStorageAmogus;
 import at.asdf00.avaplus.util.ModConfig;
@@ -22,7 +23,7 @@ import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
 public class TileEntityAmogus extends TileEntity implements ITickable {
     private final EnergyStorageAmogus storage = new EnergyStorageAmogus(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE);
-    public ItemStackHandler handlerIn = new ItemStackHandler(1);
+    public ItemStackHandler handlerIn = new ISHin(1);
     public ItemStackHandler handlerOut = new ISHout(1);
     private String customName;
 

@@ -1,5 +1,4 @@
 AvaPlus V1.0.x
--> avaritia crafting recipe
 
 
 AvaPlus V1.1.x
