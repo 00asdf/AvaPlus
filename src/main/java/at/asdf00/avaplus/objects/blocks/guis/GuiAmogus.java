@@ -39,4 +39,10 @@ public class GuiAmogus extends GuiContainer {
         if (singularityOnly)
             drawTexturedModalRect(guiLeft + 26, guiTop + 27, 0, 188, 16, 16);
     }
+    @Override
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        drawDefaultBackground();
+        super.drawScreen(mouseX, mouseY, partialTicks);
+        renderHoveredToolTip(mouseX, mouseY);
+    }
 }

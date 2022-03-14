@@ -2,7 +2,7 @@
 {
   "modid": "avaplus",
   "name": "AvaPlus",
-  "description": "extension for Avaritia",
+  "description": "extension mod for Avaritia",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "https://github.com/00asdf/AvaPlus",

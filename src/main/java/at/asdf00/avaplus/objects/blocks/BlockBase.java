@@ -4,6 +4,7 @@ import at.asdf00.avaplus.Main;
 import at.asdf00.avaplus.init.BlockInit;
 import at.asdf00.avaplus.init.ItemInit;
 import at.asdf00.avaplus.util.IHasModel;
+import morph.avaritia.Avaritia;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
@@ -15,7 +16,7 @@ public class BlockBase extends Block implements IHasModel {
         super(material);
         setUnlocalizedName(name);
         setRegistryName(name);
-        setCreativeTab(CreativeTabs.REDSTONE);
+        setCreativeTab(Avaritia.tab);
 
         BlockInit.BLOCK_LIST.add(this);
         ItemInit.ITEM_LIST.add(new ItemBlock(this).setRegistryName(this.getRegistryName()));

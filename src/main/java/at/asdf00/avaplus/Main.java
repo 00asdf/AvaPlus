@@ -1,6 +1,10 @@
 package at.asdf00.avaplus;
 
 import at.asdf00.avaplus.util.handlers.RegistryHandler;
+import morph.avaritia.recipe.AvaritiaRecipeManager;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.*;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -9,6 +13,8 @@ import at.asdf00.avaplus.proxy.*;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
@@ -22,6 +28,7 @@ public class Main {
 
     @Instance
     public static Main instance;
+
     public static File configFile;
 
     @SidedProxy(clientSide = References.CLIENT, serverSide = References.SERVER)

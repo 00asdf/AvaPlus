@@ -27,7 +27,6 @@ public class TileEntityAmogus extends TileEntity implements ITickable {
     private String customName;
 
     private static final boolean _debugSelfFueling = References._DEBUGMODE;
-    //public static final long rfToReplicate = (long)Integer.MAX_VALUE << 2;
 
     public long rfConsumed;
     public boolean active;
@@ -80,7 +79,7 @@ public class TileEntityAmogus extends TileEntity implements ITickable {
     }
     @Override
     public ITextComponent getDisplayName() {
-        return new TextComponentTranslation("container.amogus");
+        return new TextComponentTranslation("container.replicator");
     }
 
     @Override
@@ -88,8 +87,6 @@ public class TileEntityAmogus extends TileEntity implements ITickable {
         if (_debugSelfFueling) {
             if (world.isBlockPowered(pos))
                 storage.receiveEnergy(Integer.MAX_VALUE >> 6, false);
-            //Main.logger.info("energy stored: " + storage.getEnergyStored());
-            //Main.logger.info("energy consumed: " + rfConsumed);
         }
 
         // reset progress if empty (singularity can be swapped mid process

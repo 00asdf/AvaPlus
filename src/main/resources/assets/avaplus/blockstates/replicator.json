@@ -1,10 +1,13 @@
 {
-  "variants": {
-    "active=false": {
-      "model": "avaplus:replicator",
-      "textures": {
-        "all": "avaplus:blocks/replicator"
-      }
+    "variants": 
+    {
+        "active=false,facing=north": { "model": "avaplus:replicator" },
+        "active=false,facing=east": { "model": "avaplus:replicator", "y": 90 },
+        "active=false,facing=south": { "model": "avaplus:replicator", "y": 180 },
+        "active=false,facing=west": { "model": "avaplus:replicator", "y": 270 },
+        "active=true,facing=north": { "model": "avaplus:act_replicator" },
+        "active=true,facing=east": { "model": "avaplus:act_replicator", "y": 90 },
+        "active=true,facing=south": { "model": "avaplus:act_replicator", "y": 180 },
+        "active=true,facing=west": { "model": "avaplus:act_replicator", "y":270  }
     }
-  }
 }

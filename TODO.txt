@@ -1,8 +1,5 @@
 AvaPlus V1.0.x
--> new block texture
 -> avaritia crafting recipe
-
--> code cleanup
 
 
 AvaPlus V1.1.x
