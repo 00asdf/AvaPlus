@@ -1,4 +1,9 @@
--> get item texture working
--> können wir das konfigurierbar machen? (rfToReplicate)
+AvaPlus V1.0.x
+-> new block texture
+-> avaritia crafting recipe
 
 -> code cleanup
+
+
+AvaPlus V1.1.x
+-> open up replicator for all items

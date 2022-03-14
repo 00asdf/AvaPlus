@@ -4,6 +4,7 @@ import at.asdf00.avaplus.Main;
 import at.asdf00.avaplus.init.BlockInit;
 import at.asdf00.avaplus.init.ItemInit;
 import at.asdf00.avaplus.util.IHasModel;
+import at.asdf00.avaplus.util.ModConfig;
 import morph.avaritia.client.gui.GUIHandler;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -12,6 +13,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 
@@ -27,7 +29,7 @@ public class RegistryHandler {
         TileEntityHandler.registerTileEntities();
     }
     @SubscribeEvent
-    public void onModelRegister(ModelRegistryEvent e) {
+    public static void onModelRegister(ModelRegistryEvent e) {
         for (Item item : ItemInit.ITEM_LIST) {
             if (item instanceof IHasModel) {
                 ((IHasModel)item).registerModels();
@@ -40,6 +42,9 @@ public class RegistryHandler {
         }
     }
 
+    public static void preInitRegistries(FMLPreInitializationEvent event) {
+        ModConfig.registerConfig(event);
+    }
     public static void initRegistries(FMLInitializationEvent e) {
         NetworkRegistry.INSTANCE.registerGuiHandler(Main.instance, new AmoGuiHandler());
     }

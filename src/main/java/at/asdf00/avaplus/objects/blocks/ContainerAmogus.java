@@ -41,7 +41,6 @@ public class ContainerAmogus extends Container {
     }
     @Override
     public void updateProgressBar(int id, int data) {
-        tileentity.setField(id, data);
         if (id == 0)
             tileentity.setRfConsumedScaled(data);
     }
@@ -68,11 +67,20 @@ public class ContainerAmogus extends Container {
                 slot.onSlotChange(transferSt, stack);
             } else {    // transfer into replicator
                 if (transferSt.getItem().getRegistryName().toString().equals("avaritia:singularity")) {
-                    if (!mergeItemStack(transferSt, 0, 1, false))
-                        return ItemStack.EMPTY;
+                    if (!mergeItemStack(transferSt, 0, 1, false)) {
+                        if (index < 11 && !mergeItemStack(transferSt, 11, inventorySlots.size(), false))
+                            return ItemStack.EMPTY;
+                        else if (!mergeItemStack(transferSt, 2, 11, false))
+                            return ItemStack.EMPTY;
+                    }
                     slot.onSlotChange(transferSt, stack);
                 } else {
-                    return ItemStack.EMPTY;
+                    if (!mergeItemStack(transferSt, 0, 1, false)) {
+                        if (index < 11 && !mergeItemStack(transferSt, 11, inventorySlots.size(), false))
+                            return ItemStack.EMPTY;
+                        else if (!mergeItemStack(transferSt, 2, 11, false))
+                            return ItemStack.EMPTY;
+                    }
                 }
             }
             if(transferSt.isEmpty())
