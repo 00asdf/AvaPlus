@@ -2,4 +2,8 @@ AvaPlus V1.0.x
 
 
 AvaPlus V1.1.x
--> open up replicator for all items
+-> code refactoring (package amogus / amogust2)
+-> set filter on replicator t2
+-> add recipe for t2
+-> balance t2
+-> update example config

@@ -1,6 +1,8 @@
 # blocks
 tile.block_test.name=Test Block
 tile.replicator.name=Replicator
+tile.replicator_t2.name=Replicator Tier 2
 
 # container
 container.replicator=Replicator
+container.replicator_t2=Replicator Tier 2

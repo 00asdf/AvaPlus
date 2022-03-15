@@ -1,5 +1,6 @@
 package at.asdf00.avaplus.objects.blocks.tileentities;
 
+import at.asdf00.avaplus.Main;
 import at.asdf00.avaplus.References;
 import at.asdf00.avaplus.objects.blocks.BlockAmogus;
 import at.asdf00.avaplus.objects.blocks.StackHandlers.ISHAmogusIn;
@@ -12,8 +13,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -21,9 +24,9 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
 public class TileEntityAmogus extends TileEntity implements ITickable {
-    protected final EnergyStorageAmogus storage;
-    public final ItemStackHandler handlerIn;
-    public final ItemStackHandler handlerOut;
+    protected EnergyStorageAmogus storage;
+    public ItemStackHandler handlerIn;
+    public ItemStackHandler handlerOut;
     protected String customName;
 
     public TileEntityAmogus() {
@@ -98,12 +101,19 @@ public class TileEntityAmogus extends TileEntity implements ITickable {
         }
 
         // reset progress if empty (singularity can be swapped mid process
-        if (handlerIn.getStackInSlot(0).isEmpty())
+        if (handlerIn.getStackInSlot(0).isEmpty() && rfConsumed > 0) {
             rfConsumed = 0;
+            markDirty();
+        }
 
         // throw warning if there is an invalid item in input slot
         // this should in theory never happen due to filters put in place
-        if (isValidInput(handlerIn.getStackInSlot(0)))
+        if ((isValidInput(handlerIn.getStackInSlot(0))  || handlerIn.getStackInSlot(0).getItem().getRegistryName().toString().equals("minecraft:air")) && thrownWarning)
+            thrownWarning = false;
+        else if (!(isValidInput(handlerIn.getStackInSlot(0))  || handlerIn.getStackInSlot(0).getItem().getRegistryName().toString().equals("minecraft:air")) && !thrownWarning) {
+            Main.logger.warn("Replicator at " + pos.getX() + ", " + pos.getY() + ", " + pos.getZ() + " has invalid item " + handlerIn.getStackInSlot(0).getItem().getRegistryName() + " in its input slot!");
+            thrownWarning = true;
+        }
 
         // only process singularity if there is space in output slot
         if (storage.forceExtractEnergy((int)Math.min(Integer.MAX_VALUE, getRfToReplicate() - rfConsumed), true) > 0 &&
@@ -113,14 +123,14 @@ public class TileEntityAmogus extends TileEntity implements ITickable {
             active = true;
             // setting active blockstate
             if (lastActive == 0)
-                BlockAmogus.setState(true, null, world, pos);
+                setBlockState(true, null, world, pos);
             lastActive = 15;
             rfConsumed += storage.forceExtractEnergy((int)Math.min(Integer.MAX_VALUE, getRfToReplicate() - rfConsumed), false);
         } else {
             active = false;
             // setting active blockstate (15 ticks delay when deactivating to reduce lag in case of fluctuating power)
             if (lastActive == 1) {
-                BlockAmogus.setState(false, null, world, pos);
+                setBlockState(false, null, world, pos);
                 lastActive = 0;
             } else if (lastActive > 1) {
                 lastActive--;
@@ -174,5 +184,8 @@ public class TileEntityAmogus extends TileEntity implements ITickable {
     }
     public long getRfToReplicate() {
         return ModConfig.AMOGUS_RFTOREPLICATE;
+    }
+    public void setBlockState(Boolean active, EnumFacing facing, World worldIn, BlockPos pos) {
+        BlockAmogus.setState(active, facing, worldIn, pos);
     }
 }

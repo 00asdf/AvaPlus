@@ -1,6 +1,5 @@
 package at.asdf00.avaplus.objects.blocks.guis;
 
-import at.asdf00.avaplus.Main;
 import at.asdf00.avaplus.References;
 import at.asdf00.avaplus.objects.blocks.ContainerAmogus;
 import at.asdf00.avaplus.objects.blocks.tileentities.TileEntityAmogus;
@@ -10,16 +9,16 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiAmogus extends GuiContainer {
-    private static final ResourceLocation TEXTURES = new ResourceLocation(References.MODID + ":textures/gui/amogui.png");
-    private final InventoryPlayer player;
-    private final TileEntityAmogus tileentity;
-    private final boolean singularityOnly;
+    protected static final ResourceLocation TEXTURES = new ResourceLocation(References.MODID + ":textures/gui/amogui.png");
+    protected final InventoryPlayer player;
+    protected final TileEntityAmogus tileentity;
+    protected boolean singularityOnly;
 
-    public GuiAmogus(InventoryPlayer player, TileEntityAmogus tileentity, boolean singularityOnly) {
-        super(new ContainerAmogus(player, tileentity));
+    public GuiAmogus(InventoryPlayer player, TileEntityAmogus tileentity, boolean tier1) {
+        super(new ContainerAmogus(player, tileentity, tier1));
         this.player = player;
         this.tileentity = tileentity;
-        this.singularityOnly = singularityOnly;
+        this.singularityOnly = tier1;
     }
 
     @Override

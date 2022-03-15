@@ -9,6 +9,7 @@ public class References {
     public static final String SERVER = "at.asdf00.avaplus.proxy.CommonProxy";
 
     public static final int AMOGUI = 0;
+    public static final int AMOGUIT2 = 1;
 
-    public static final boolean _DEBUGMODE = false;
+    public static final boolean _DEBUGMODE = true;
 }

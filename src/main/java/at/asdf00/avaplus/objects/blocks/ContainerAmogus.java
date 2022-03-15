@@ -3,6 +3,7 @@ package at.asdf00.avaplus.objects.blocks;
 
 import at.asdf00.avaplus.objects.blocks.slots.SlotHandlerAmogusIn;
 import at.asdf00.avaplus.objects.blocks.slots.SlotHandlerAmogusOut;
+import at.asdf00.avaplus.objects.blocks.slots.SlotHandlerAmogusT2In;
 import at.asdf00.avaplus.objects.blocks.tileentities.TileEntityAmogus;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -14,14 +15,19 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 public class ContainerAmogus extends Container {
-    private final TileEntityAmogus tileentity;
-    private int scaledRfConsumed;
+    protected TileEntityAmogus tileentity;
+    protected int scaledRfConsumed;
 
-    public ContainerAmogus(InventoryPlayer player, TileEntityAmogus tileentity) {
+    protected ContainerAmogus() {}
+
+    public ContainerAmogus(InventoryPlayer player, TileEntityAmogus tileentity, boolean tier1) {
         this.tileentity = tileentity;
         IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
         // replicator slots
-        addSlotToContainer(new SlotHandlerAmogusIn(handler, 0, 26, 27));
+        if (tier1)
+            addSlotToContainer(new SlotHandlerAmogusIn(handler, 0, 26, 27));
+        else
+            addSlotToContainer(new SlotHandlerAmogusT2In(handler, 0, 26, 27));
         addSlotToContainer(new SlotHandlerAmogusOut(handler, 1, 134, 27));
         // hotbar slots
         for(int x = 0; x < 9; x++) {

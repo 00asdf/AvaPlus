@@ -4,7 +4,6 @@ import at.asdf00.avaplus.Main;
 import at.asdf00.avaplus.References;
 import at.asdf00.avaplus.init.BlockInit;
 import at.asdf00.avaplus.objects.blocks.tileentities.TileEntityAmogus;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -31,7 +30,7 @@ public class BlockAmogus extends BlockBase {
     public BlockAmogus(String name) {
         super(name, Material.IRON);
         setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(ACTIVE, false));
-        setHardness(5);
+        setHardness(6);
     }
 
     public static void setState(Boolean active, EnumFacing facing, World worldIn, BlockPos pos) {
@@ -64,11 +63,7 @@ public class BlockAmogus extends BlockBase {
     @Override
     public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
         if (!worldIn.isRemote) {
-            IBlockState north = worldIn.getBlockState(pos.north());
-            IBlockState south = worldIn.getBlockState(pos.south());
-            IBlockState west = worldIn.getBlockState(pos.west());
-            IBlockState east = worldIn.getBlockState(pos.east());
-            EnumFacing face = (EnumFacing)state.getValue(FACING);
+            EnumFacing face = state.getValue(FACING);
             setState(null, face, worldIn, pos);
         }
     }
