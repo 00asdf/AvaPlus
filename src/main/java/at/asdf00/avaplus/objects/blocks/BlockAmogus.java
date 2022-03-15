@@ -30,6 +30,7 @@ public class BlockAmogus extends BlockBase {
     public BlockAmogus(String name) {
         super(name, Material.IRON);
         setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(ACTIVE, false));
+        setHardness(5);
     }
 
     public static void setState(Boolean active, EnumFacing facing, World worldIn, BlockPos pos) {

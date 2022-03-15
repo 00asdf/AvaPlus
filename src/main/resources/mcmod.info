@@ -8,7 +8,7 @@
   "url": "https://github.com/00asdf/AvaPlus",
   "updateUrl": "",
   "authorList": ["00asdf", "GHXX"],
-  "credits": "thanks to GHXX for creating the textures and helping with fixing bugs",
+  "credits": "Thanks to GHXX for creating the textures and helping with fixing bugs",
   "logoFile": "",
   "screenshots": [],
   "dependencies": ["Avaritia"]
