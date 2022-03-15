@@ -5,8 +5,8 @@ import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 
-public class ISHout extends ItemStackHandler {
-    public ISHout(int size) {
+public class ISHAmogusOut extends ItemStackHandler {
+    public ISHAmogusOut(int size) {
         super(size);
     }
 

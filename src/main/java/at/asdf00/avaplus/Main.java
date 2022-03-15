@@ -17,7 +17,7 @@ import java.io.File;
 public class Main {
 
     // logger for this mod
-    private static Logger logger;
+    public static Logger logger;
 
     @Instance
     public static Main instance;

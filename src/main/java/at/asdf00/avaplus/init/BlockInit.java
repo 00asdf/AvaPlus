@@ -1,9 +1,7 @@
 package at.asdf00.avaplus.init;
 
 import at.asdf00.avaplus.objects.blocks.BlockAmogus;
-import at.asdf00.avaplus.objects.blocks.BlockBase;
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 
 import java.util.ArrayList;
 import java.util.List;

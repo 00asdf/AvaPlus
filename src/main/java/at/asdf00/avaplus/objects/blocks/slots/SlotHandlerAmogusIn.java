@@ -1,6 +1,7 @@
 package at.asdf00.avaplus.objects.blocks.slots;
 
 import at.asdf00.avaplus.Main;
+import at.asdf00.avaplus.objects.blocks.tileentities.TileEntityAmogus;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -14,6 +15,6 @@ public class SlotHandlerAmogusIn extends SlotItemHandler {
 
     @Override
     public boolean isItemValid(@Nonnull ItemStack stack) {
-        return stack.getItem().getRegistryName().toString().equals("avaritia:singularity") && super.isItemValid(stack);
+        return TileEntityAmogus.staticIsValidInput(stack) && super.isItemValid(stack);
     }
 }

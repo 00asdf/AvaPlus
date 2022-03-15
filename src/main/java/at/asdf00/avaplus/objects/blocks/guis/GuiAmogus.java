@@ -4,8 +4,6 @@ import at.asdf00.avaplus.Main;
 import at.asdf00.avaplus.References;
 import at.asdf00.avaplus.objects.blocks.ContainerAmogus;
 import at.asdf00.avaplus.objects.blocks.tileentities.TileEntityAmogus;
-import at.asdf00.avaplus.util.CustomConfig;
-import at.asdf00.avaplus.util.ModConfig;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -52,13 +50,13 @@ public class GuiAmogus extends GuiContainer {
 
     private static final String[] si ={"", "k", "M", "G", "T", "P", "E"};
     private String progressToString() {
-        long cur = ModConfig.AMOGUS_RFTOREPLICATE;
+        long cur = tileentity.getRfToReplicate();
         int pre = 0;
         while (cur >= 1000) {
             cur /= 1000;
             pre++;
         }
-        return getScaledAsString(tileentity.getRfConsumed(), pre) + "/ " + getScaledAsString(ModConfig.AMOGUS_RFTOREPLICATE, pre) + si[pre] + "RF";
+        return getScaledAsString(tileentity.getRfConsumed(), pre) + "/ " + getScaledAsString(tileentity.getRfToReplicate(), pre) + si[pre] + "RF";
     }
     private String getScaledAsString(long val, int pre) {
         val /= Math.round(Math.pow(1000, pre)) / 10;

@@ -66,7 +66,7 @@ public class ContainerAmogus extends Container {
                     return ItemStack.EMPTY;
                 slot.onSlotChange(transferSt, stack);
             } else {    // transfer into replicator
-                if (transferSt.getItem().getRegistryName().toString().equals("avaritia:singularity")) {
+                if (tileentity.isValidInput(transferSt)) {
                     if (!mergeItemStack(transferSt, 0, 1, false)) {
                         if (index < 11 && !mergeItemStack(transferSt, 11, inventorySlots.size(), false))
                             return ItemStack.EMPTY;
