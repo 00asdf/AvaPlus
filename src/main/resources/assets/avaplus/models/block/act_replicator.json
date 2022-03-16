@@ -4,7 +4,7 @@
         "particle": "avaplus:blocks/replicator_side",
         "up": "avaplus:blocks/replicator_up",
         "down": "avaplus:blocks/replicator_down",
-        "north": "avaplus:blocks/replicator_front_off",
+        "north": "avaplus:blocks/replicator_front_on",
         "east": "avaplus:blocks/replicator_side",
         "south": "avaplus:blocks/replicator_side",
         "west": "avaplus:blocks/replicator_side"

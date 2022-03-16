@@ -2,13 +2,13 @@
 {
   "modid": "avaplus",
   "name": "AvaPlus",
-  "description": "extension for Avaritia",
+  "description": "extension mod for Avaritia",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "https://github.com/00asdf/AvaPlus",
   "updateUrl": "",
   "authorList": ["00asdf", "GHXX"],
-  "credits": "asdfasdfasdfasdfasdf",
+  "credits": "Thanks to GHXX for creating the textures and helping with fixing bugs",
   "logoFile": "",
   "screenshots": [],
   "dependencies": ["Avaritia"]

@@ -16,12 +16,12 @@ import java.io.File;
 @Mod(modid = References.MODID, name = References.NAME, version = References.VERSION, dependencies = References.DEPENDENCIES, useMetadata = true)
 public class Main {
 
-    // will be private later
+    // logger for this mod
     public static Logger logger;
-
 
     @Instance
     public static Main instance;
+
     public static File configFile;
 
     @SidedProxy(clientSide = References.CLIENT, serverSide = References.SERVER)

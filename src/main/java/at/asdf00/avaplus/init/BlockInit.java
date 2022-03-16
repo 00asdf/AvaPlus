@@ -1,10 +1,8 @@
 package at.asdf00.avaplus.init;
 
 import at.asdf00.avaplus.objects.blocks.BlockAmogus;
-import at.asdf00.avaplus.objects.blocks.BlockBase;
-import at.asdf00.avaplus.objects.blocks.BlockReplicator;
+import at.asdf00.avaplus.objects.blocks.BlockAmogusT2;
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +10,7 @@ import java.util.List;
 public class BlockInit {
     public static final List<Block> BLOCK_LIST = new ArrayList<>();
 
-    public static final Block BLOCK_TEST = new BlockBase("block_test", Material.IRON);
-    //public static final Block REPLICATOR = new BlockReplicator("replicator");
-    public static final Block AMOGUS = new BlockAmogus("amogus");
+    // public static final Block BLOCK_TEST = new BlockBase("block_test", Material.IRON);
+    public static final Block AMOGUS = new BlockAmogus("replicator");
+    public static final Block AMOGUST2 = new BlockAmogusT2("replicator_t2");
 }

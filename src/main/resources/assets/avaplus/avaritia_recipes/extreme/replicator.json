@@ -1,0 +1,50 @@
+{
+  "type": "avaritia:shaped",
+  "result": {
+    "item": "avaplus:replicator",
+    "count": 1
+  },
+  "pattern": [
+    "cnnnnnnnc",
+    "nnnnnnnnn",
+    "neeeeeeen",
+    "neeeieeen",
+    "neettteen",
+    "nnnnnnnnn",
+    "nrrrrrrrn",
+    "nrrrrrrrn",
+    "cmmmmmmmc"
+  ],
+  "key": {
+    "c": {
+      "type": "minecraft:item",
+      "item": "minecraft:end_crystal"
+    },
+    "n": {
+      "type": "minecraft:item",
+      "item": "avaritia:block_resource",
+      "data": 0
+    },
+    "e": {
+      "type": "minecraft:item",
+      "item": "avaritia:endest_pearl"
+    },
+    "i": {
+      "type": "minecraft:item",
+      "item": "avaritia:resource",
+      "data": 5
+    },
+    "t": {
+      "type": "minecraft:item",
+      "item": "avaritia:extreme_crafting_table"
+    },
+    "r": {
+      "type": "minecraft:item",
+      "item": "minecraft:redstone_block"
+    },
+    "m": {
+      "type": "minecraft:item",
+      "item": "avaritia:neutronium_compressor"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+    "variants": 
+    {
+        "active=false,facing=north": { "model": "avaplus:replicator_t2" },
+        "active=false,facing=east": { "model": "avaplus:replicator_t2", "y": 90 },
+        "active=false,facing=south": { "model": "avaplus:replicator_t2", "y": 180 },
+        "active=false,facing=west": { "model": "avaplus:replicator_t2", "y": 270 },
+        "active=true,facing=north": { "model": "avaplus:act_replicator_t2" },
+        "active=true,facing=east": { "model": "avaplus:act_replicator_t2", "y": 90 },
+        "active=true,facing=south": { "model": "avaplus:act_replicator_t2", "y": 180 },
+        "active=true,facing=west": { "model": "avaplus:act_replicator_t2", "y":270  }
+    }
+}

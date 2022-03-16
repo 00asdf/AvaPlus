@@ -1,6 +1,5 @@
 package at.asdf00.avaplus.init;
 
-import at.asdf00.avaplus.objects.items.ItemBase;
 import net.minecraft.item.Item;
 
 import java.util.ArrayList;

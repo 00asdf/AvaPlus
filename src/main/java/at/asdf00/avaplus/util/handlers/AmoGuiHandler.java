@@ -13,16 +13,26 @@ public class AmoGuiHandler implements IGuiHandler {
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
     {
-        if(ID == References.AMOGUI)
-            return new ContainerAmogus(player.inventory, (TileEntityAmogus) world.getTileEntity(new BlockPos(x,y,z)));
-        return null;
+        switch (ID) {
+            case References.AMOGUI:
+                return new ContainerAmogus(player.inventory, (TileEntityAmogus) world.getTileEntity(new BlockPos(x,y,z)), true);
+            case References.AMOGUIT2:
+                return new ContainerAmogus(player.inventory, (TileEntityAmogus) world.getTileEntity(new BlockPos(x,y,z)), false);
+            default:
+                return null;
+        }
     }
 
     @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
     {
-        if(ID == References.AMOGUI)
-            return new GuiAmogus(player.inventory, (TileEntityAmogus) world.getTileEntity(new BlockPos(x,y,z)), true);
-        return null;
+        switch (ID) {
+            case References.AMOGUI:
+                return new GuiAmogus(player.inventory, (TileEntityAmogus) world.getTileEntity(new BlockPos(x,y,z)), true);
+            case References.AMOGUIT2:
+                return new GuiAmogus(player.inventory, (TileEntityAmogus) world.getTileEntity(new BlockPos(x,y,z)), false);
+            default:
+                return null;
+        }
     }
 }

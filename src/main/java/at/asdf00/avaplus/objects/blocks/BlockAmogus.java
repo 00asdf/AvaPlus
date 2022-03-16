@@ -30,6 +30,7 @@ public class BlockAmogus extends BlockBase {
     public BlockAmogus(String name) {
         super(name, Material.IRON);
         setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(ACTIVE, false));
+        setHardness(6);
     }
 
     public static void setState(Boolean active, EnumFacing facing, World worldIn, BlockPos pos) {
@@ -46,11 +47,11 @@ public class BlockAmogus extends BlockBase {
 
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-        return Item.getItemFromBlock(BlockInit.AMOGUS);
+        return Item.getItemFromBlock(this);
     }
     @Override
     public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
-        return new ItemStack(BlockInit.AMOGUS);
+        return new ItemStack(this);
     }
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
@@ -62,11 +63,7 @@ public class BlockAmogus extends BlockBase {
     @Override
     public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
         if (!worldIn.isRemote) {
-            IBlockState north = worldIn.getBlockState(pos.north());
-            IBlockState south = worldIn.getBlockState(pos.south());
-            IBlockState west = worldIn.getBlockState(pos.west());
-            IBlockState east = worldIn.getBlockState(pos.east());
-            EnumFacing face = (EnumFacing)state.getValue(FACING);
+            EnumFacing face = state.getValue(FACING);
             setState(null, face, worldIn, pos);
         }
     }
@@ -103,11 +100,11 @@ public class BlockAmogus extends BlockBase {
     }
     @Override
     public IBlockState withRotation(IBlockState state, Rotation rot) {
-        return state.withProperty(FACING, rot.rotate((EnumFacing)state.getValue(FACING)));
+        return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
     }
     @Override
     public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
-        return state.withRotation(mirrorIn.toRotation((EnumFacing)state.getValue(FACING)));
+        return state.withRotation(mirrorIn.toRotation(state.getValue(FACING)));
     }
     @Override
     protected BlockStateContainer createBlockState() {
@@ -121,6 +118,6 @@ public class BlockAmogus extends BlockBase {
     }
     @Override
     public int getMetaFromState(IBlockState state) {
-        return ((EnumFacing)state.getValue(FACING)).getIndex();
+        return (state.getValue(FACING)).getIndex();
     }
 }

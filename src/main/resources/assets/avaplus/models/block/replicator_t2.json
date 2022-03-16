@@ -1,0 +1,12 @@
+{
+    "parent": "block/orientable",
+    "textures": {
+        "particle": "avaplus:blocks/replicator_t2_side",
+        "up": "avaplus:blocks/replicator_t2_up",
+        "down": "avaplus:blocks/replicator_t2_down",
+        "north": "avaplus:blocks/replicator_t2_front_off",
+        "east": "avaplus:blocks/replicator_t2_side",
+        "south": "avaplus:blocks/replicator_t2_side",
+        "west": "avaplus:blocks/replicator_t2_side"
+    }
+}
