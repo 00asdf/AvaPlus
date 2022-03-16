@@ -2,8 +2,8 @@ AvaPlus V1.0.x
 
 
 AvaPlus V1.1.x
--> code refactoring (package amogus / amogust2)
--> set filter on replicator t2
+-> add infinity singularity
 -> add recipe for t2
 -> balance t2
+-> add advancement "copy cat (the immeasurable power of cloning)"
 -> update example config

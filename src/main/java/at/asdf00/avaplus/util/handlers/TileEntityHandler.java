@@ -1,8 +1,8 @@
 package at.asdf00.avaplus.util.handlers;
 
 import at.asdf00.avaplus.References;
-import at.asdf00.avaplus.objects.blocks.tileentities.TileEntityAmogus;
-import at.asdf00.avaplus.objects.blocks.tileentities.TileEntityAmogusT2;
+import at.asdf00.avaplus.objects.blocks.amogus.TileEntityAmogus;
+import at.asdf00.avaplus.objects.blocks.amogust2.TileEntityAmogusT2;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 

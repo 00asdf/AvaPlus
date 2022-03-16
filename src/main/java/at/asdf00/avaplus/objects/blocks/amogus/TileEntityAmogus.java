@@ -1,12 +1,9 @@
-package at.asdf00.avaplus.objects.blocks.tileentities;
+package at.asdf00.avaplus.objects.blocks.amogus;
 
 import at.asdf00.avaplus.Main;
 import at.asdf00.avaplus.References;
 import at.asdf00.avaplus.objects.blocks.BlockAmogus;
-import at.asdf00.avaplus.objects.blocks.StackHandlers.ISHAmogusIn;
-import at.asdf00.avaplus.objects.blocks.StackHandlers.ISHAmogusOut;
-import at.asdf00.avaplus.objects.blocks.energy.EnergyStorageAmogus;
-import at.asdf00.avaplus.util.ModConfig;
+import at.asdf00.avaplus.ModConfig;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -108,15 +105,16 @@ public class TileEntityAmogus extends TileEntity implements ITickable {
 
         // throw warning if there is an invalid item in input slot
         // this should in theory never happen due to filters put in place
-        if ((isValidInput(handlerIn.getStackInSlot(0))  || handlerIn.getStackInSlot(0).getItem().getRegistryName().toString().equals("minecraft:air")) && thrownWarning)
+        if ((isValidInput(handlerIn.getStackInSlot(0)) || handlerIn.getStackInSlot(0).isEmpty()) && thrownWarning)
             thrownWarning = false;
-        else if (!(isValidInput(handlerIn.getStackInSlot(0))  || handlerIn.getStackInSlot(0).getItem().getRegistryName().toString().equals("minecraft:air")) && !thrownWarning) {
+        else if (!(isValidInput(handlerIn.getStackInSlot(0))  || handlerIn.getStackInSlot(0).isEmpty()) && !thrownWarning) {
             Main.logger.warn("Replicator at " + pos.getX() + ", " + pos.getY() + ", " + pos.getZ() + " has invalid item " + handlerIn.getStackInSlot(0).getItem().getRegistryName() + " in its input slot!");
             thrownWarning = true;
         }
 
         // only process singularity if there is space in output slot
         if (storage.forceExtractEnergy((int)Math.min(Integer.MAX_VALUE, getRfToReplicate() - rfConsumed), true) > 0 &&
+                !handlerIn.getStackInSlot(0).isEmpty() &&
                 isValidInput(handlerIn.getStackInSlot(0)) &&
                 handlerOut.getStackInSlot(0).getCount() < handlerOut.getStackInSlot(0).getMaxStackSize() - 1 &&
                 (handlerOut.getStackInSlot(0).isEmpty() || handlerIn.getStackInSlot(0).isItemEqual(handlerOut.getStackInSlot(0)))) {

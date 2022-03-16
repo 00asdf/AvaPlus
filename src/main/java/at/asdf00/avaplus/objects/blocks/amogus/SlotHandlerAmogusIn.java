@@ -1,7 +1,5 @@
-package at.asdf00.avaplus.objects.blocks.slots;
+package at.asdf00.avaplus.objects.blocks.amogus;
 
-import at.asdf00.avaplus.Main;
-import at.asdf00.avaplus.objects.blocks.tileentities.TileEntityAmogus;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;

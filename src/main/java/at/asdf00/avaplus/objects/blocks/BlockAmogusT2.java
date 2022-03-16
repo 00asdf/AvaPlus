@@ -3,7 +3,7 @@ package at.asdf00.avaplus.objects.blocks;
 import at.asdf00.avaplus.Main;
 import at.asdf00.avaplus.References;
 import at.asdf00.avaplus.init.BlockInit;
-import at.asdf00.avaplus.objects.blocks.tileentities.TileEntityAmogusT2;
+import at.asdf00.avaplus.objects.blocks.amogust2.TileEntityAmogusT2;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;

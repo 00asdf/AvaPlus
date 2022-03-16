@@ -4,13 +4,11 @@ import at.asdf00.avaplus.Main;
 import at.asdf00.avaplus.init.BlockInit;
 import at.asdf00.avaplus.init.ItemInit;
 import at.asdf00.avaplus.util.IHasModel;
-import at.asdf00.avaplus.util.ModConfig;
-import morph.avaritia.client.gui.GUIHandler;
+import at.asdf00.avaplus.ModConfig;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -46,6 +44,6 @@ public class RegistryHandler {
         ModConfig.registerConfig(event);
     }
     public static void initRegistries(FMLInitializationEvent e) {
-        NetworkRegistry.INSTANCE.registerGuiHandler(Main.instance, new AmoGuiHandler());
+        NetworkRegistry.INSTANCE.registerGuiHandler(Main.instance, new GuiHandler());
     }
 }

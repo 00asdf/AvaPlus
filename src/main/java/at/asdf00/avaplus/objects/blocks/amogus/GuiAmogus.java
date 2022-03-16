@@ -1,8 +1,6 @@
-package at.asdf00.avaplus.objects.blocks.guis;
+package at.asdf00.avaplus.objects.blocks.amogus;
 
 import at.asdf00.avaplus.References;
-import at.asdf00.avaplus.objects.blocks.ContainerAmogus;
-import at.asdf00.avaplus.objects.blocks.tileentities.TileEntityAmogus;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;

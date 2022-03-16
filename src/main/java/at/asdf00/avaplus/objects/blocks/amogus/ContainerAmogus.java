@@ -1,10 +1,10 @@
-package at.asdf00.avaplus.objects.blocks;
+package at.asdf00.avaplus.objects.blocks.amogus;
 
 
-import at.asdf00.avaplus.objects.blocks.slots.SlotHandlerAmogusIn;
-import at.asdf00.avaplus.objects.blocks.slots.SlotHandlerAmogusOut;
-import at.asdf00.avaplus.objects.blocks.slots.SlotHandlerAmogusT2In;
-import at.asdf00.avaplus.objects.blocks.tileentities.TileEntityAmogus;
+import at.asdf00.avaplus.objects.blocks.amogus.SlotHandlerAmogusIn;
+import at.asdf00.avaplus.objects.blocks.amogus.SlotHandlerAmogusOut;
+import at.asdf00.avaplus.objects.blocks.amogust2.SlotHandlerAmogusT2In;
+import at.asdf00.avaplus.objects.blocks.amogus.TileEntityAmogus;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;

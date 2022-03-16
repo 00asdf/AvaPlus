@@ -1,10 +1,10 @@
-package at.asdf00.avaplus.objects.blocks.tileentities;
+package at.asdf00.avaplus.objects.blocks.amogust2;
 
 import at.asdf00.avaplus.objects.blocks.BlockAmogusT2;
-import at.asdf00.avaplus.objects.blocks.StackHandlers.ISHAmogusOut;
-import at.asdf00.avaplus.objects.blocks.StackHandlers.ISHAmogusT2In;
-import at.asdf00.avaplus.objects.blocks.energy.EnergyStorageAmogus;
-import at.asdf00.avaplus.util.ModConfig;
+import at.asdf00.avaplus.objects.blocks.amogus.ISHAmogusOut;
+import at.asdf00.avaplus.objects.blocks.amogus.TileEntityAmogus;
+import at.asdf00.avaplus.objects.blocks.amogus.EnergyStorageAmogus;
+import at.asdf00.avaplus.ModConfig;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -20,7 +20,7 @@ public class TileEntityAmogusT2 extends TileEntityAmogus {
     }
 
     public static boolean staticIsValidInput(ItemStack stack) {
-        return stack.getItem().getRegistryName().toString().contains("avaritia:");
+        return true;
     }
 
     @Override

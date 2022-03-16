@@ -1,4 +1,4 @@
-package at.asdf00.avaplus.objects.blocks.energy;
+package at.asdf00.avaplus.objects.blocks.amogus;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.energy.EnergyStorage;

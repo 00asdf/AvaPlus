@@ -1,7 +1,6 @@
-package at.asdf00.avaplus.util;
+package at.asdf00.avaplus;
 
-import at.asdf00.avaplus.Main;
-import at.asdf00.avaplus.References;
+import at.asdf00.avaplus.util.CustomConfig;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import java.io.File;
