@@ -1,0 +1,61 @@
+{
+  "type": "avaritia:shaped",
+  "result": {
+    "item": "avaplus:replicator_t2",
+    "count": 1
+  },
+  "pattern": [
+    "scccccccs",
+    "ciiiiiiic",
+    "cieeeeeic",
+    "ciehuaeic",
+    "cieu#ueic",
+    "cievupeic",
+    "cieeeeeic",
+    "ciiiiiiic",
+    "scccccccs"
+  ],
+  "key": {
+    "s": {
+      "type": "minecraft:item",
+      "item": "avaplus:infinity_singularity"
+    },
+    "c": {
+      "type": "minecraft:item",
+      "item": "avaplus:replicator"
+    },
+    "i": {
+      "type": "minecraft:item",
+      "item": "avaritia:block_resource",
+      "data": 1
+    },
+    "e": {
+      "type": "minecraft:item",
+      "item": "avaritia:endest_pearl"
+    },
+    "h": {
+      "type": "minecraft:item",
+      "item": "avaritia:infinity_hoe"
+    },
+    "u": {
+      "type": "minecraft:item",
+      "item": "avaritia:ultimate_stew"
+    },
+    "a": {
+      "type": "minecraft:item",
+      "item": "avaritia:infinity_axe"
+    },
+    "#": {
+      "type": "minecraft:item",
+      "item": "avaritia:infinity_sword"
+    },
+    "v": {
+      "type": "minecraft:item",
+      "item": "avaritia:infinity_shovel"
+    },
+    "p": {
+      "type": "minecraft:item",
+      "item": "avaritia:infinity_pickaxe"
+    }
+  }
+}

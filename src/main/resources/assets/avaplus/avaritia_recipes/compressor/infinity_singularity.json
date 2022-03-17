@@ -1,0 +1,15 @@
+{
+  "type": "avaritia:compressor",
+  "result": {
+    "item": "avaplus:infinity_singularity",
+    "count": 1
+  },
+  "cost": 15245,
+  "ingredients": [
+    {
+      "type": "minecraft:item",
+      "item": "avaritia:block_resource",
+      "data": 1
+    }
+  ]
+}

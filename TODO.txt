@@ -2,8 +2,8 @@ AvaPlus V1.0.x
 
 
 AvaPlus V1.1.x
--> add infinity singularity
--> add recipe for t2
 -> balance t2
--> add advancement "copy cat (the immeasurable power of cloning)"
+-> add advancement "to insanity and beyond (the immeasurable power of cloning)"
 -> update example config
+
+

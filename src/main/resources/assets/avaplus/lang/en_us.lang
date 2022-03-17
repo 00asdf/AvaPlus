@@ -6,3 +6,6 @@ tile.replicator_t2.name=Replicator Tier 2
 # container
 container.replicator=Replicator
 container.replicator_t2=Replicator Tier 2
+
+# items
+item.infinity_singularity.name=Infinity Singularity
