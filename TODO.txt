@@ -2,8 +2,11 @@ AvaPlus V1.0.x
 
 
 AvaPlus V1.1.x
--> balance t2
--> add advancement "to insanity and beyond (the immeasurable power of cloning)"
 -> update example config
+
+
+nice to have
+-> add advancement "to insanity and beyond (the immeasurable power of cloning)"
+-> item halo for infinity singularity
 
 

@@ -9,7 +9,7 @@ public class ModConfig {
     public static CustomConfig conf;
 
     public static long AMOGUS_RFTOREPLICATE = 40_000_000_000L;
-    public static long AMOGUST2_RFTOREPLICATE = 60_000_000_000L;
+    public static long AMOGUST2_RFTOREPLICATE = 32_768_000_000_000L;
 
     public static void init(File file) {
         conf = new CustomConfig(file);
@@ -21,7 +21,7 @@ public class ModConfig {
 
         category = "replicator_tier2";
         conf.addCustomCategoryComment(category, "Configure the replicator tier 2");
-        AMOGUST2_RFTOREPLICATE = conf.getLong("RF_TO_REPLICATE_T2", category, 60_000_000_000L, 1, Long.MAX_VALUE, "Set the energy needed to replicate any item");
+        AMOGUST2_RFTOREPLICATE = conf.getLong("RF_TO_REPLICATE_T2", category, 32_768_000_000_000L, 1, Long.MAX_VALUE, "Set the energy needed to replicate any item");
     }
     public static void registerConfig(FMLPreInitializationEvent e) {
         Main.configFile = new File(e.getModConfigurationDirectory() + "/" + References.MODID);
