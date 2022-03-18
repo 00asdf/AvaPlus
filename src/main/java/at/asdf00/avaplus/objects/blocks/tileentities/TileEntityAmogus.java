@@ -160,16 +160,16 @@ public class TileEntityAmogus extends TileEntity implements ITickable {
     public long getRfConsumed() {
         return rfConsumed;
     }
-    public int getRfConsumedScaled() {
-        if (getRfToReplicate() <= Integer.MAX_VALUE)
-            return (int)rfConsumed;
-        return (int)(getProgress() * Integer.MAX_VALUE);
+    public short getRfConsumedScaled() {
+        if (getRfToReplicate() <= Short.MAX_VALUE)
+            return (short)rfConsumed;
+        return (short)(getProgress() * (double)Short.MAX_VALUE);
     }
-    public void setRfConsumedScaled(int value) {
-        if (getRfToReplicate() <= Integer.MAX_VALUE)
+    public void setRfConsumedScaled(short value) {
+        if (getRfToReplicate() <= Short.MAX_VALUE)
             rfConsumed = value;
         else
-            rfConsumed = (long)(((double)value / (double)Integer.MAX_VALUE) * getRfToReplicate());
+            rfConsumed = (long)(((double)value / (double)Short.MAX_VALUE) * getRfToReplicate());
     }
 
     // methods for ease of use in child classes

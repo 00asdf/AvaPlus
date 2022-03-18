@@ -41,8 +41,9 @@ public class ContainerAmogus extends Container {
     }
     @Override
     public void updateProgressBar(int id, int data) {
-        if (id == 0)
-            tileentity.setRfConsumedScaled(data);
+        if (id == 0) {
+            tileentity.setRfConsumedScaled((short)data);
+        }
     }
     @Override
     public void detectAndSendChanges() {

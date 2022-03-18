@@ -11,7 +11,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
 
-version = "1.0.1"
+version = "1.0.2"
 group = "asdf00Mods" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "AvaPlus"
 
@@ -105,5 +105,5 @@ task prepareAssets(type: Copy) {
 classes.dependsOn(prepareAssets)
 
 sourceSets {
-    sourceSets { output.resourcesDir = output.classesDir }
+    sourdeSets { output.resourcesDir = output.classesDir }
 }
