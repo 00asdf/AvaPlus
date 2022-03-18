@@ -33,7 +33,7 @@ public class TileEntityAmogus extends TileEntity implements ITickable {
     }
 
     protected static final boolean _debugSelfFueling = References._DEBUGMODE;
-    protected static final int _debugSeflFuelingAmount = Integer.MAX_VALUE >> 5;
+    protected static final int _debugSelfFuelingAmount = Integer.MAX_VALUE >> 5;
 
     public long rfConsumed;
     public boolean active;
@@ -94,7 +94,7 @@ public class TileEntityAmogus extends TileEntity implements ITickable {
     public void update() {
         if (_debugSelfFueling) {
             if (world.isBlockPowered(pos))
-                storage.receiveEnergy(_debugSeflFuelingAmount, false);
+                storage.receiveEnergy(_debugSelfFuelingAmount, false);
         }
 
         // reset progress if empty (singularity can be swapped mid process
@@ -161,16 +161,16 @@ public class TileEntityAmogus extends TileEntity implements ITickable {
     public long getRfConsumed() {
         return rfConsumed;
     }
-    public int getRfConsumedScaled() {
-        if (getRfToReplicate() <= Integer.MAX_VALUE)
-            return (int)rfConsumed;
-        return (int)(getProgress() * Integer.MAX_VALUE);
+    public short getRfConsumedScaled() {
+        if (getRfToReplicate() <= Short.MAX_VALUE)
+            return (short)rfConsumed;
+        return (short)(getProgress() * Short.MAX_VALUE);
     }
-    public void setRfConsumedScaled(int value) {
-        if (getRfToReplicate() <= Integer.MAX_VALUE)
+    public void setRfConsumedScaled(short value) {
+        if (getRfToReplicate() <= Short.MAX_VALUE)
             rfConsumed = value;
         else
-            rfConsumed = (long)(((double)value / (double)Integer.MAX_VALUE) * getRfToReplicate());
+            rfConsumed = (long)(((double)value / (double)Short.MAX_VALUE) * getRfToReplicate());
     }
 
     // methods for ease of use in child classes
