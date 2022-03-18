@@ -1,5 +1,6 @@
 package at.asdf00.avaplus.objects.blocks.tileentities;
 
+import at.asdf00.avaplus.Main;
 import at.asdf00.avaplus.References;
 import at.asdf00.avaplus.objects.blocks.BlockAmogus;
 import at.asdf00.avaplus.objects.blocks.StackHandlers.ISHAmogusIn;
@@ -33,13 +34,13 @@ public class TileEntityAmogus extends TileEntity implements ITickable {
     }
 
     protected static final boolean _debugSelfFueling = References._DEBUGMODE;
-    protected static final int _debugSeflFuelingAmount = Integer.MAX_VALUE >> 5;
+    protected static final int _debugSeflFuelingAmount = Integer.MAX_VALUE >> 2;
 
     public long rfConsumed;
     public boolean active;
 
     protected int lastActive = 0;
-    protected boolean thrownWarning = false;
+    protected boolean thrownError = false;
 
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
@@ -101,12 +102,18 @@ public class TileEntityAmogus extends TileEntity implements ITickable {
         if (handlerIn.getStackInSlot(0).isEmpty())
             rfConsumed = 0;
 
-        // throw warning if there is an invalid item in input slot
+        // throw error if there is an invalid item in input slot
         // this should in theory never happen due to filters put in place
-        if (isValidInput(handlerIn.getStackInSlot(0)))
+        if ((isValidInput(handlerIn.getStackInSlot(0)) || handlerIn.getStackInSlot(0).isEmpty()) && thrownError)
+            thrownError = false;
+        else if (!(isValidInput(handlerIn.getStackInSlot(0))  || handlerIn.getStackInSlot(0).isEmpty()) && !thrownError) {
+            Main.logger.error("Replicator at " + pos.getX() + ", " + pos.getY() + ", " + pos.getZ() + " has invalid item " + handlerIn.getStackInSlot(0).getItem().getRegistryName() + " in its input slot!");
+            thrownError = true;
+        }
 
         // only process singularity if there is space in output slot
         if (storage.forceExtractEnergy((int)Math.min(Integer.MAX_VALUE, getRfToReplicate() - rfConsumed), true) > 0 &&
+                !handlerIn.getStackInSlot(0).isEmpty() &&
                 isValidInput(handlerIn.getStackInSlot(0)) &&
                 handlerOut.getStackInSlot(0).getCount() < handlerOut.getStackInSlot(0).getMaxStackSize() - 1 &&
                 (handlerOut.getStackInSlot(0).isEmpty() || handlerIn.getStackInSlot(0).isItemEqual(handlerOut.getStackInSlot(0)))) {

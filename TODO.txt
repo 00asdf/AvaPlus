@@ -1,5 +1,13 @@
+BUILD INFO:
+build.gradle for developing:
+sourceSets {
+    main { output.resourcesDir = output.classesDir }
+}
+build.gradle for building a jar via assemble:
+sourceSets {
+    sourceSets { output.resourcesDir = output.classesDir }
+}
+
+
+
 AvaPlus V1.0.x
-
-
-AvaPlus V1.1.x
--> open up replicator for all items

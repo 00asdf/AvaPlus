@@ -7,6 +7,8 @@ import at.asdf00.avaplus.util.IHasModel;
 import at.asdf00.avaplus.util.ModConfig;
 import morph.avaritia.client.gui.GUIHandler;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockHorizontal;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.event.RegistryEvent;
@@ -16,6 +18,9 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 @EventBusSubscriber
 public class RegistryHandler {

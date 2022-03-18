@@ -4,7 +4,6 @@ import at.asdf00.avaplus.Main;
 import at.asdf00.avaplus.References;
 import at.asdf00.avaplus.init.BlockInit;
 import at.asdf00.avaplus.objects.blocks.tileentities.TileEntityAmogus;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
