@@ -19,6 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import java.util.Random;
@@ -87,7 +88,9 @@ public class BlockAmogus extends BlockBase {
     }
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-        worldIn.setBlockState(pos, getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()), 2);
+        worldIn.setBlockState(pos, getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()), 3);
+
+        Main.logger.info("placed with facing " + worldIn.getBlockState(pos).getValue(FACING));
     }
     @Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
@@ -118,12 +121,19 @@ public class BlockAmogus extends BlockBase {
     @SuppressWarnings("deprecation")
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        EnumFacing facing = EnumFacing.getFront(meta);
-        if(facing.getAxis() == EnumFacing.Axis.Y) facing = EnumFacing.NORTH;
-        return getDefaultState().withProperty(FACING, facing);
+        Main.logger.info("received meta = " + meta);
+        Main.logger.info("received direction = " + EnumFacing.getFront((meta & 3) + 2));
+        EnumFacing facing = EnumFacing.getFront((meta & 3) + 2);
+        if(facing.getAxis() == EnumFacing.Axis.Y)
+            facing = EnumFacing.NORTH;
+
+        Main.logger.info("received active = " + ((meta & 4) == 4));
+        return getDefaultState().withProperty(FACING, facing).withProperty(ACTIVE, (meta & 4) == 4);
+        // meta masks: direction &3, active &4
     }
     @Override
     public int getMetaFromState(IBlockState state) {
-        return (state.getValue(FACING)).getIndex();
+        Main.logger.info("sending meta = " + ((state.getValue(FACING).getIndex() - 2) + (state.getValue(ACTIVE) ? 4 : 0)));
+        return (state.getValue(FACING).getIndex() - 2) + (state.getValue(ACTIVE) ? 4 : 0);
     }
 }
