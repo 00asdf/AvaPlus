@@ -7,9 +7,15 @@ import at.asdf00.avaplus.util.IHasModel;
 import morph.avaritia.Avaritia;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class BlockBase extends Block implements IHasModel {
     public BlockBase(String name, Material material) {
@@ -25,5 +31,19 @@ public class BlockBase extends Block implements IHasModel {
     @Override
     public void registerModels() {
         Main.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "inventory");
+    }
+    @Override
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+        return Item.getItemFromBlock(this);
+    }
+    @SuppressWarnings("deprecation")
+    @Override
+    public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
+        return new ItemStack(this);
+    }
+    @SuppressWarnings("deprecation")
+    @Override
+    public EnumBlockRenderType getRenderType(IBlockState state) {
+        return EnumBlockRenderType.MODEL;
     }
 }

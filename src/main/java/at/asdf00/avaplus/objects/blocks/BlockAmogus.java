@@ -6,7 +6,6 @@ import at.asdf00.avaplus.init.BlockInit;
 import at.asdf00.avaplus.objects.blocks.amogus.TileEntityAmogus;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
@@ -14,15 +13,11 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-
-import java.util.Random;
 
 public class BlockAmogus extends BlockBase {
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
@@ -40,21 +35,12 @@ public class BlockAmogus extends BlockBase {
         worldIn.setBlockState(pos, BlockInit.AMOGUS.getDefaultState()
                 .withProperty(FACING, facing == null ? state.getValue(FACING) : facing)
                 .withProperty(ACTIVE, active == null ? state.getValue(ACTIVE) : active), 3);
-        if(tileentity != null) {
+        if (tileentity != null) {
             tileentity.validate();
             worldIn.setTileEntity(pos, tileentity);
         }
     }
 
-    @Override
-    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-        return Item.getItemFromBlock(this);
-    }
-    @SuppressWarnings("deprecation")
-    @Override
-    public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
-        return new ItemStack(this);
-    }
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if(!worldIn.isRemote) {
@@ -64,10 +50,8 @@ public class BlockAmogus extends BlockBase {
     }
     @Override
     public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
-        if (!worldIn.isRemote) {
-            EnumFacing face = state.getValue(FACING);
-            setState(null, face, worldIn, pos);
-        }
+        if (!worldIn.isRemote)
+            setState(null, state.getValue(FACING), worldIn, pos);
     }
     @SuppressWarnings("deprecation")
     @Override
@@ -76,7 +60,7 @@ public class BlockAmogus extends BlockBase {
     }
     @Override
     public boolean hasTileEntity(IBlockState state) {
-        return true;
+        return hasTileEntity();
     }
     @Override
     public TileEntity createTileEntity(World world, IBlockState state) {
@@ -88,9 +72,7 @@ public class BlockAmogus extends BlockBase {
     }
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-        worldIn.setBlockState(pos, getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()), 3);
-
-        Main.logger.info("placed with facing " + worldIn.getBlockState(pos).getValue(FACING));
+        worldIn.setBlockState(pos, getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()), 2);
     }
     @Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
@@ -98,11 +80,6 @@ public class BlockAmogus extends BlockBase {
         worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.handlerIn.getStackInSlot(0)));
         worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.handlerOut.getStackInSlot(0)));
         super.breakBlock(worldIn, pos, state);
-    }
-    @SuppressWarnings("deprecation")
-    @Override
-    public EnumBlockRenderType getRenderType(IBlockState state) {
-        return EnumBlockRenderType.MODEL;
     }
     @SuppressWarnings("deprecation")
     @Override
@@ -116,24 +93,20 @@ public class BlockAmogus extends BlockBase {
     }
     @Override
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, new IProperty[] {ACTIVE,FACING});
+        return new BlockStateContainer(this, ACTIVE,FACING);
     }
     @SuppressWarnings("deprecation")
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        Main.logger.info("received meta = " + meta);
-        Main.logger.info("received direction = " + EnumFacing.getFront((meta & 3) + 2));
         EnumFacing facing = EnumFacing.getFront((meta & 3) + 2);
         if(facing.getAxis() == EnumFacing.Axis.Y)
             facing = EnumFacing.NORTH;
-
-        Main.logger.info("received active = " + ((meta & 4) == 4));
         return getDefaultState().withProperty(FACING, facing).withProperty(ACTIVE, (meta & 4) == 4);
         // meta masks: direction &3, active &4
     }
     @Override
     public int getMetaFromState(IBlockState state) {
-        Main.logger.info("sending meta = " + ((state.getValue(FACING).getIndex() - 2) + (state.getValue(ACTIVE) ? 4 : 0)));
         return (state.getValue(FACING).getIndex() - 2) + (state.getValue(ACTIVE) ? 4 : 0);
+        // meta masks: direction &3, active &4
     }
 }

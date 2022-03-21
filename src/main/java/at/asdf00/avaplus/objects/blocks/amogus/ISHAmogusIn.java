@@ -15,4 +15,8 @@ public class ISHAmogusIn extends ItemStackHandler {
     public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
         return TileEntityAmogus.staticIsValidInput(stack) ? super.insertItem(slot, stack, simulate) : stack;
     }
+    @Override
+    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+        return TileEntityAmogus.staticIsValidInput(stack) && super.isItemValid(slot, stack);
+    }
 }

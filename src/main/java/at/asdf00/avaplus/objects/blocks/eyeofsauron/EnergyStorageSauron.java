@@ -1,5 +1,7 @@
 package at.asdf00.avaplus.objects.blocks.eyeofsauron;
 
+import at.asdf00.avaplus.Main;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public class EnergyStorageSauron implements IEnergyStorage {
@@ -25,6 +27,10 @@ public class EnergyStorageSauron implements IEnergyStorage {
         int extracted = Math.min(maxExtract, getEnergyStored());
         if (!simulate)
             rfContained -= extracted;
+        if (rfContained < 0) {
+            Main.logger.error("BlackHoleGenerator has negative amount of energy stored!\nprev=" + (rfContained + extracted) + " extracted=" + extracted + " now=" + rfContained);
+            rfContained = 0;
+        }
         return extracted;
     }
     @Override
@@ -42,5 +48,16 @@ public class EnergyStorageSauron implements IEnergyStorage {
     @Override
     public boolean canReceive() {
         return false;
+    }
+    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+        compound.setLong("RfContained", rfContained);
+        return compound;
+    }
+    public void readFromNBT(NBTTagCompound compound) {
+        rfContained = compound.getLong("RfContained");
+        if (rfContained < 0) {
+            Main.logger.error("BlackHoleGenerator has negative amount of energy stored!\nfaulty data received from nbt!");
+            rfContained = 0;
+        }
     }
 }

@@ -13,6 +13,10 @@ public class ISHSauron extends ItemStackHandler {
     @Nonnull
     @Override
     public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-        return super.insertItem(slot, stack, simulate);
+        return TileEntitySauron.isValidInput(stack) ? super.insertItem(slot, stack, simulate) : stack;
+    }
+    @Override
+    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+        return TileEntitySauron.isValidInput(stack) && super.isItemValid(slot, stack);
     }
 }

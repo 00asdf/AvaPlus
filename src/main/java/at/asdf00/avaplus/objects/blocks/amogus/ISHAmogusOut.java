@@ -15,4 +15,8 @@ public class ISHAmogusOut extends ItemStackHandler {
     public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
         return stack;
     }
+    @Override
+    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+        return false;
+    }
 }

@@ -25,7 +25,7 @@ public class TileEntityAmogusT2 extends TileEntityAmogus {
 
     @Override
     public ITextComponent getDisplayName() {
-        return new TextComponentTranslation("container.replicator_t2");
+        return new TextComponentTranslation("container.replicator_t2.name");
     }
     @Override
     public boolean isValidInput(ItemStack stack) {

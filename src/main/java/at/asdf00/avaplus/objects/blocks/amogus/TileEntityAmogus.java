@@ -43,8 +43,10 @@ public class TileEntityAmogus extends TileEntity implements ITickable {
 
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-        if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) return true;
-        if(capability == CapabilityEnergy.ENERGY) return true;
+        if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+            return true;
+        if(capability == CapabilityEnergy.ENERGY)
+            return true;
         return super.hasCapability(capability, facing);
     }
     @Override
@@ -61,7 +63,7 @@ public class TileEntityAmogus extends TileEntity implements ITickable {
                 return (T) handlerOut;
         }
         if(capability == CapabilityEnergy.ENERGY)
-            return (T)storage;
+            return (T) storage;
         return super.getCapability(capability, facing);
     }
     @Override
@@ -87,7 +89,7 @@ public class TileEntityAmogus extends TileEntity implements ITickable {
     }
     @Override
     public ITextComponent getDisplayName() {
-        return new TextComponentTranslation("container.replicator");
+        return new TextComponentTranslation("container.replicator.name");
     }
 
     @Override
