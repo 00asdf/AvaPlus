@@ -1,10 +1,6 @@
 package at.asdf00.avaplus.objects.blocks.amogus;
 
-
-import at.asdf00.avaplus.objects.blocks.amogus.SlotHandlerAmogusIn;
-import at.asdf00.avaplus.objects.blocks.amogus.SlotHandlerAmogusOut;
 import at.asdf00.avaplus.objects.blocks.amogust2.SlotHandlerAmogusT2In;
-import at.asdf00.avaplus.objects.blocks.amogus.TileEntityAmogus;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -17,8 +13,6 @@ import net.minecraftforge.items.IItemHandler;
 public class ContainerAmogus extends Container {
     protected TileEntityAmogus tileentity;
     protected int scaledRfConsumed;
-
-    protected ContainerAmogus() {}
 
     public ContainerAmogus(InventoryPlayer player, TileEntityAmogus tileentity, boolean tier1) {
         this.tileentity = tileentity;

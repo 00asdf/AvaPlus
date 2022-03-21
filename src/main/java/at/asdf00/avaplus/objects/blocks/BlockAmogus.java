@@ -49,6 +49,7 @@ public class BlockAmogus extends BlockBase {
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         return Item.getItemFromBlock(this);
     }
+    @SuppressWarnings("deprecation")
     @Override
     public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
         return new ItemStack(this);
@@ -67,6 +68,7 @@ public class BlockAmogus extends BlockBase {
             setState(null, face, worldIn, pos);
         }
     }
+    @SuppressWarnings("deprecation")
     @Override
     public boolean hasTileEntity() {
         return true;
@@ -94,14 +96,17 @@ public class BlockAmogus extends BlockBase {
         worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY(), pos.getZ(), tileentity.handlerOut.getStackInSlot(0)));
         super.breakBlock(worldIn, pos, state);
     }
+    @SuppressWarnings("deprecation")
     @Override
     public EnumBlockRenderType getRenderType(IBlockState state) {
         return EnumBlockRenderType.MODEL;
     }
+    @SuppressWarnings("deprecation")
     @Override
     public IBlockState withRotation(IBlockState state, Rotation rot) {
         return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
     }
+    @SuppressWarnings("deprecation")
     @Override
     public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
         return state.withRotation(mirrorIn.toRotation(state.getValue(FACING)));
@@ -110,6 +115,7 @@ public class BlockAmogus extends BlockBase {
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, new IProperty[] {ACTIVE,FACING});
     }
+    @SuppressWarnings("deprecation")
     @Override
     public IBlockState getStateFromMeta(int meta) {
         EnumFacing facing = EnumFacing.getFront(meta);

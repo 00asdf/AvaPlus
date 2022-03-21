@@ -12,5 +12,7 @@ public class BlockInit {
 
     // public static final Block BLOCK_TEST = new BlockBase("block_test", Material.IRON);
     public static final Block AMOGUS = new BlockAmogus("replicator");
+
+
     public static final Block AMOGUST2 = new BlockAmogusT2("replicator_t2");
 }
