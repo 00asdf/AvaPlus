@@ -15,7 +15,6 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
 import javax.annotation.Nullable;
 
@@ -91,8 +90,7 @@ public class TileEntitySauron extends TileEntity implements ITickable {
                 BlockSauron.setState(false, null, world, pos);
             coyoteTime = 15;
 
-            int produced = (int)(Integer.MAX_VALUE * ((float)matterStored / (float)ModConfig.SAURON_MATTER_CAPACITY));
-            storage.forceReceiveEnergy(produced, false);
+            storage.forceReceiveEnergy(getRfProduced(), false);
             matterStored--;
         } else {
             if (coyoteTime > 1)
@@ -103,13 +101,16 @@ public class TileEntitySauron extends TileEntity implements ITickable {
             }
         }
     }
-    protected long getMatterYield(ItemStack stack) {
+    public long getMatterYield(ItemStack stack) {
         if (stack.getItem().getRegistryName().equals("avaritia:resource")) {
             // sort by meta data
             return ModConfig.SAURON_YIELD_IINGOT;
         } else if (stack.getItem().getRegistryName().equals("avartia:block_resource") /* && meta filter */)
             return ModConfig.SAURON_YIELD_IBLOCK;
         return 0;
+    }
+    public int getRfProduced() {
+        return (int)(Integer.MAX_VALUE * ((float)matterStored / (float)ModConfig.SAURON_MATTER_CAPACITY));
     }
 
     public boolean isUsableByPlayer(EntityPlayer player) {

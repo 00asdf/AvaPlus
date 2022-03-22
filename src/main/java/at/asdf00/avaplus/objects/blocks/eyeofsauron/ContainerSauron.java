@@ -3,12 +3,15 @@ package at.asdf00.avaplus.objects.blocks.eyeofsauron;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 
 public class ContainerSauron extends Container {
     protected final InventoryPlayer player;
     protected final TileEntitySauron tileentity;
+    protected int matterStoredCheck = 0;
 
     public ContainerSauron(InventoryPlayer player, TileEntitySauron tileentity) {
         this.player = player;
@@ -29,5 +32,52 @@ public class ContainerSauron extends Container {
     @Override
     public boolean canInteractWith(EntityPlayer playerIn) {
         return tileentity.isUsableByPlayer(playerIn);
+    }
+    @Override
+    public void detectAndSendChanges() {
+        super.detectAndSendChanges();
+        for (IContainerListener listener : listeners)
+            if (matterStoredCheck != tileentity.matterStored)
+                listener.sendWindowProperty(this, 0, tileentity.matterStored);
+        matterStoredCheck = tileentity.matterStored;
+    }
+    @Override
+    public void updateProgressBar(int id, int data) {
+        if (id == 0) {
+            tileentity.matterStored = data;
+        }
+    }
+    @Override
+    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
+        ItemStack stack = ItemStack.EMPTY;
+        Slot slot = getSlot(index);
+        if (slot != null && slot.getHasStack()) {
+            ItemStack transferSt = slot.getStack();
+            stack = transferSt.copy();
+            if (index < 1) {    // transfer from generator to player
+                if (!mergeItemStack(transferSt, 1, inventorySlots.size(), false))
+                    return ItemStack.EMPTY;
+                slot.onSlotChange(transferSt, stack);
+            } else {    // transfer into generator
+                if (TileEntitySauron.isValidInput(transferSt)) {
+                    if (!mergeItemStack(transferSt, 0, 1, false)) {
+                        if (index < 10 && !mergeItemStack(transferSt, 10, inventorySlots.size(), false))
+                            return ItemStack.EMPTY;
+                        else if (!mergeItemStack(transferSt, 1, 10, false))
+                            return ItemStack.EMPTY;
+                    }
+                    slot.onSlotChange(transferSt, stack);
+                } else {
+                    if (!mergeItemStack(transferSt, 0, 1, false)) {
+                        if (index < 10 && !mergeItemStack(transferSt, 10, inventorySlots.size(), false))
+                            return ItemStack.EMPTY;
+                        else if (!mergeItemStack(transferSt, 1, 10, false))
+                            return ItemStack.EMPTY;
+                    }
+                    slot.onSlotChange(transferSt, stack);
+                }
+            }
+        }
+        return stack;
     }
 }

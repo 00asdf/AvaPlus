@@ -47,11 +47,9 @@ public class ContainerAmogus extends Container {
     @Override
     public void detectAndSendChanges() {
         super.detectAndSendChanges();
-        for(int i = 0; i < listeners.size(); ++i) {
-            IContainerListener listener = listeners.get(i);
-            if(scaledRfConsumed != tileentity.getRfConsumedScaled())
+        for (IContainerListener listener : listeners)
+            if (scaledRfConsumed != tileentity.getRfConsumedScaled())
                 listener.sendWindowProperty(this, 0, tileentity.getRfConsumedScaled());
-        }
         scaledRfConsumed = tileentity.getRfConsumedScaled();
     }
     @Override
@@ -81,6 +79,7 @@ public class ContainerAmogus extends Container {
                         else if (!mergeItemStack(transferSt, 2, 11, false))
                             return ItemStack.EMPTY;
                     }
+                    slot.onSlotChange(transferSt, stack);
                 }
             }
             if(transferSt.isEmpty())
