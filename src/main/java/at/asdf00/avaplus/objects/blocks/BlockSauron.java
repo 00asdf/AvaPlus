@@ -4,7 +4,6 @@ import at.asdf00.avaplus.init.BlockInit;
 import at.asdf00.avaplus.objects.blocks.eyeofsauron.TileEntitySauron;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;

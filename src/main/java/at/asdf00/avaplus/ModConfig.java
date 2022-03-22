@@ -10,6 +10,7 @@ public class ModConfig {
 
     public static long AMOGUS_RFTOREPLICATE = 40_000_000_000L;
     public static long AMOGUST2_RFTOREPLICATE = 32_768_000_000_000L;
+    public static int SAURON_MATTER_CAPACITY = 3657142; // decrements 1 per tick
     public static long SAURON_YIELD_ICATALYST = 750_000_000_000_000L;
     public static long SAURON_YIELD_IINGOT = 12_000_000_000_000_000L;
     public static long SAURON_YIELD_IBLOCK = 120_000_000_000_000_000L;

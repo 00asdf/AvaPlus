@@ -22,6 +22,7 @@ import javax.annotation.Nullable;
 public class TileEntitySauron extends TileEntity implements ITickable {
     public final ISHSauron handler;
     protected final EnergyStorageSauron storage;
+    protected int matterStored;
 
     protected int coyoteTime = 0;
 
@@ -57,6 +58,7 @@ public class TileEntitySauron extends TileEntity implements ITickable {
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
         compound.setTag("Input", handler.serializeNBT());
+        compound.setInteger("MatterStored", matterStored);
         storage.writeToNBT(compound);
         return compound;
     }
@@ -64,6 +66,7 @@ public class TileEntitySauron extends TileEntity implements ITickable {
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
         handler.deserializeNBT(compound.getCompoundTag("Input"));
+        matterStored = compound.getInteger("MatterStored");
         storage.readFromNBT(compound);
     }
     @Nullable
@@ -74,36 +77,37 @@ public class TileEntitySauron extends TileEntity implements ITickable {
 
     @Override
     public void update() {
-        if (storage.getEnergyStored() != Integer.MAX_VALUE &&
-                !handler.getStackInSlot(0).isEmpty() &&
-                isValidInput(handler.getStackInSlot(0))) {
-            storage.forceReceiveEnergy(getRfYield(handler.getStackInSlot(0)), false);
-            handler.getStackInSlot(0).shrink(1);
-            if (coyoteTime <= 0)
+        // consume items
+        ItemStack stack = handler.getStackInSlot(0);
+        if (!stack.isEmpty() &&
+                matterStored < ModConfig.SAURON_MATTER_CAPACITY &&
+                isValidInput(stack)) {
+            matterStored += getMatterYield(stack);
+            stack.shrink(1);
+        }
+        // generate energy
+        if (matterStored > 0) {
+            if (coyoteTime == 0)
                 BlockSauron.setState(false, null, world, pos);
             coyoteTime = 15;
-            markDirty();
-            return;
-        }
-        if (storage.getEnergyStored() <= 0) {
-            if (coyoteTime > 1) {
+
+            int produced = (int)(Integer.MAX_VALUE * ((float)matterStored / (float)ModConfig.SAURON_MATTER_CAPACITY));
+            storage.forceReceiveEnergy(produced, false);
+            matterStored--;
+        } else {
+            if (coyoteTime > 1)
                 coyoteTime--;
-                markDirty();
-                return;
-            }
-            if (coyoteTime == 1) {
-                coyoteTime = 0;
+            else if (coyoteTime == 1) {
                 BlockSauron.setState(true, null, world, pos);
-                markDirty();
-                return;
+                coyoteTime = 0;
             }
         }
     }
-    protected long getRfYield(ItemStack stack) {
+    protected long getMatterYield(ItemStack stack) {
         if (stack.getItem().getRegistryName().equals("avaritia:resource")) {
             // sort by meta data
             return ModConfig.SAURON_YIELD_IINGOT;
-        } else if (stack.getItem().getRegistryName().equals("avartia:block_resource") /* && metal filter */)
+        } else if (stack.getItem().getRegistryName().equals("avartia:block_resource") /* && meta filter */)
             return ModConfig.SAURON_YIELD_IBLOCK;
         return 0;
     }

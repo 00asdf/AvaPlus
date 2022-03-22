@@ -6,18 +6,22 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class EnergyStorageSauron implements IEnergyStorage {
 
-    protected long rfContained;
+    protected int rfContained;
+    protected int rfConsumedLastCycle;
 
     @Override
     public int receiveEnergy(int maxReceive, boolean simulate) {
         return 0;
     }
-    public long forceReceiveEnergy(long maxReceive, boolean simulate) {
-        long free = Math.max(Long.MAX_VALUE - rfContained, 0);
-        long received = Math.min(maxReceive, free);
+    public int forceReceiveEnergy(int maxReceive, boolean simulate) {
+        int free = Integer.MAX_VALUE - rfContained;
+        int received = Math.min(maxReceive, free);
         received = Math.max(received, 0);
-        if (!simulate)
+        if (!simulate) {
             rfContained += received;
+            if (rfContained < 0)
+                rfContained = Integer.MAX_VALUE;
+        }
         return received;
     }
     @Override
@@ -25,8 +29,10 @@ public class EnergyStorageSauron implements IEnergyStorage {
         if (!canExtract())
             return 0;
         int extracted = Math.min(maxExtract, getEnergyStored());
-        if (!simulate)
+        if (!simulate) {
             rfContained -= extracted;
+            rfConsumedLastCycle += 0;
+        }
         if (rfContained < 0) {
             Main.logger.error("BlackHoleGenerator has negative amount of energy stored!\nprev=" + (rfContained + extracted) + " extracted=" + extracted + " now=" + rfContained);
             rfContained = 0;
@@ -41,6 +47,13 @@ public class EnergyStorageSauron implements IEnergyStorage {
     public int getMaxEnergyStored() {
         return Integer.MAX_VALUE;
     }
+    public int queryLastCycle() {
+        try {
+            return rfConsumedLastCycle;
+        } finally {
+            rfConsumedLastCycle = 0;
+        }
+    }
     @Override
     public boolean canExtract() {
         return true;
@@ -50,11 +63,13 @@ public class EnergyStorageSauron implements IEnergyStorage {
         return false;
     }
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-        compound.setLong("RfContained", rfContained);
+        compound.setInteger("RfContained", rfContained);
+        compound.setInteger("RfConsumedLastCycle", rfConsumedLastCycle);
         return compound;
     }
     public void readFromNBT(NBTTagCompound compound) {
-        rfContained = compound.getLong("RfContained");
+        rfContained = compound.getInteger("RfContained");
+        rfConsumedLastCycle = compound.getInteger("RfConsumedLastCycle");
         if (rfContained < 0) {
             Main.logger.error("BlackHoleGenerator has negative amount of energy stored!\nfaulty data received from nbt!");
             rfContained = 0;
