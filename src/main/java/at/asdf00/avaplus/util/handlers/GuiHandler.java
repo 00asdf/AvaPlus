@@ -4,6 +4,9 @@ import at.asdf00.avaplus.References;
 import at.asdf00.avaplus.objects.blocks.amogus.ContainerAmogus;
 import at.asdf00.avaplus.objects.blocks.amogus.GuiAmogus;
 import at.asdf00.avaplus.objects.blocks.amogus.TileEntityAmogus;
+import at.asdf00.avaplus.objects.blocks.eyeofsauron.ContainerSauron;
+import at.asdf00.avaplus.objects.blocks.eyeofsauron.GuiSauron;
+import at.asdf00.avaplus.objects.blocks.eyeofsauron.TileEntitySauron;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -15,9 +18,11 @@ public class GuiHandler implements IGuiHandler {
     {
         switch (ID) {
             case References.AMOGUI:
-                return new ContainerAmogus(player.inventory, (TileEntityAmogus) world.getTileEntity(new BlockPos(x,y,z)), true);
+                return new ContainerAmogus(player.inventory, (TileEntityAmogus) world.getTileEntity(new BlockPos(x, y, z)), true);
             case References.AMOGUIT2:
-                return new ContainerAmogus(player.inventory, (TileEntityAmogus) world.getTileEntity(new BlockPos(x,y,z)), false);
+                return new ContainerAmogus(player.inventory, (TileEntityAmogus) world.getTileEntity(new BlockPos(x, y, z)), false);
+            case References.GUISAURON:
+                return new ContainerSauron(player.inventory, (TileEntitySauron) world.getTileEntity(new BlockPos(x, y, z)));
             default:
                 return null;
         }
@@ -28,9 +33,11 @@ public class GuiHandler implements IGuiHandler {
     {
         switch (ID) {
             case References.AMOGUI:
-                return new GuiAmogus(player.inventory, (TileEntityAmogus) world.getTileEntity(new BlockPos(x,y,z)), true);
+                return new GuiAmogus(player.inventory, (TileEntityAmogus) world.getTileEntity(new BlockPos(x, y, z)), true);
             case References.AMOGUIT2:
-                return new GuiAmogus(player.inventory, (TileEntityAmogus) world.getTileEntity(new BlockPos(x,y,z)), false);
+                return new GuiAmogus(player.inventory, (TileEntityAmogus) world.getTileEntity(new BlockPos(x, y, z)), false);
+            case References.GUISAURON:
+                return new GuiSauron(player.inventory, (TileEntitySauron) world.getTileEntity(new BlockPos(x, y, z)));
             default:
                 return null;
         }

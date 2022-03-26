@@ -52,7 +52,10 @@ public class GuiSauron extends GuiContainer {
         return getScaledAsString(tileentity.getRfProduced(), pre) + si[pre] + "RF/T";
     }
     private String getScaledAsString(long val, int pre) {
-        val /= Math.round(Math.pow(1000, pre)) / 10;
+        if(pre > 0)
+            val /= Math.round(Math.pow(1000, pre)) / 10;
+        else
+            val *= 10;
         return String.format("%d.%d ", val / 10, val % 10);
     }
 }

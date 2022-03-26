@@ -2,10 +2,15 @@
 tile.block_test.name=Test Block
 tile.replicator.name=Replicator
 tile.replicator_t2.name=Replicator Tier 2
+tile.black_hole_generator.name=Black Hole Generator
 
 # container
 container.replicator.name=Replicator
 container.replicator_t2.name=Replicator Tier 2
+container.black_hole_generator.name=Black Hole Generator
 
 # items
 item.infinity_singularity.name=Infinity Singularity
+
+# config
+avaplus.config.title=AvaPlus Config

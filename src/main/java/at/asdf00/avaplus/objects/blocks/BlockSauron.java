@@ -1,5 +1,7 @@
 package at.asdf00.avaplus.objects.blocks;
 
+import at.asdf00.avaplus.Main;
+import at.asdf00.avaplus.References;
 import at.asdf00.avaplus.init.BlockInit;
 import at.asdf00.avaplus.objects.blocks.eyeofsauron.TileEntitySauron;
 import net.minecraft.block.BlockHorizontal;
@@ -10,6 +12,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
@@ -44,7 +47,6 @@ public class BlockSauron extends BlockBase {
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, FACING, EMPTY);
     }
-
     @Override
     public int getMetaFromState(IBlockState state) {
         return (state.getValue(FACING).getIndex() - 2) + (state.getValue(EMPTY) ? 4 : 0);
@@ -91,6 +93,12 @@ public class BlockSauron extends BlockBase {
         TileEntitySauron te = (TileEntitySauron)worldIn.getTileEntity(pos);
         worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY(), pos.getZ(), te.handler.getStackInSlot(0)));
         super.breakBlock(worldIn, pos, state);
+    }
+    @Override
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        if(!worldIn.isRemote)
+            playerIn.openGui(Main.instance, References.GUISAURON, worldIn, pos.getX(), pos.getY(), pos.getZ());
+        return true;
     }
     @SuppressWarnings("deprecation")
     @Override

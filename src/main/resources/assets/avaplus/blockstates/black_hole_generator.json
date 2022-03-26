@@ -1,0 +1,13 @@
+{
+  "variants":
+  {
+    "empty=false,facing=north": { "model": "avaplus:black_hole_generator_full" },
+    "empty=false,facing=east": { "model": "avaplus:black_hole_generator_full", "y": 90 },
+    "empty=false,facing=south": { "model": "avaplus:black_hole_generator_full", "y": 180 },
+    "empty=false,facing=west": { "model": "avaplus:black_hole_generator_full", "y": 270 },
+    "empty=true,facing=north": { "model": "avaplus:black_hole_generator" },
+    "empty=true,facing=east": { "model": "avaplus:black_hole_generator", "y": 90 },
+    "empty=true,facing=south": { "model": "avaplus:black_hole_generator", "y": 180 },
+    "empty=true,facing=west": { "model": "avaplus:black_hole_generator", "y":270  }
+  }
+}

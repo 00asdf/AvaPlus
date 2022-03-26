@@ -1,0 +1,42 @@
+{
+  "type": "avaritia:shaped",
+  "result": {
+    "item": "avaplus:black_hole_generator",
+    "count": 1
+  },
+  "pattern": [
+    "rinnniiir",
+    "innniinni",
+    "inniinnnn",
+    "iiniciinn",
+    "niicsciin",
+    "nniicinii",
+    "nnnniinni",
+    "inniinnni",
+    "riiinnnir"
+  ],
+  "key": {
+    "r": {
+      "type": "minecraft:item",
+      "item": "avaplus:replicator"
+    },
+    "i": {
+      "type": "minecraft:item",
+      "item": "avaritia:block_resource",
+      "data": 1
+    },
+    "n": {
+      "type": "minecraft:item",
+      "item": "avaritia:block_resource",
+      "data": 0
+    },
+    "c": {
+      "type": "minecraft:item",
+      "item": "minecraft:ender_chest"
+    },
+    "s": {
+      "type": "minecraft:item",
+      "item": "avaplus:infinity_singularity"
+    }
+  }
+}
