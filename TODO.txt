@@ -12,8 +12,7 @@ sourceSets {
 AvaPlus V1.1.x
 -> new texture for black hole generator
 -> new gui for black hole generator
--> redo energy tileentity intern wit just an int and no energy capability (only push freshly generated power to neighbours)
-(-> fix power distribution bug in TileEntitySauron "push energy")
+-> slow item burning process bhg
 -> update example config
 
 

@@ -3,7 +3,6 @@ package at.asdf00.avaplus.objects.blocks.eyeofsauron;
 import at.asdf00.avaplus.Main;
 import at.asdf00.avaplus.ModConfig;
 import at.asdf00.avaplus.objects.blocks.BlockSauron;
-import javafx.util.Pair;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -15,23 +14,24 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.EnergyStorage;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nullable;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class TileEntitySauron extends TileEntity implements ITickable {
     public final ISHSauron handler;
-    protected final EnergyStorageSauron storage;
+    protected final EnergyStorage dummy;
     protected int matterStored;
+    protected List<EnergyStorage> adjacentEnergy;
 
     protected int coyoteTime = 0;
 
     public TileEntitySauron() {
         handler = new ISHSauron(1);
-        storage = new EnergyStorageSauron();
+        dummy = new EnergyStorage(0);
     }
 
     public static boolean isValidInput(ItemStack stack) {
@@ -49,12 +49,13 @@ public class TileEntitySauron extends TileEntity implements ITickable {
             return true;
         return super.hasCapability(capability, facing);
     }
+    @SuppressWarnings("unchecked")
     @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
         if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
             return (T) handler;
         if(capability == CapabilityEnergy.ENERGY)
-            return (T) storage;
+            return (T) dummy;
         return super.getCapability(capability, facing);
     }
     @Override
@@ -62,7 +63,6 @@ public class TileEntitySauron extends TileEntity implements ITickable {
         super.writeToNBT(compound);
         compound.setTag("Input", handler.serializeNBT());
         compound.setInteger("MatterStored", matterStored);
-        storage.writeToNBT(compound);
         return compound;
     }
     @Override
@@ -70,12 +70,15 @@ public class TileEntitySauron extends TileEntity implements ITickable {
         super.readFromNBT(compound);
         handler.deserializeNBT(compound.getCompoundTag("Input"));
         matterStored = compound.getInteger("MatterStored");
-        storage.readFromNBT(compound);
     }
     @Nullable
     @Override
     public ITextComponent getDisplayName() {
         return new TextComponentTranslation("container.black_hole_generator.name");
+    }
+    @Override
+    public void onLoad() {
+        super.onLoad();
     }
 
     @Override
@@ -89,13 +92,25 @@ public class TileEntitySauron extends TileEntity implements ITickable {
             stack.shrink(1);
         }
         // generate energy
-        int produced = 0;
         if (matterStored > 0) {
             if (coyoteTime == 0)
                 BlockSauron.setState(false, null, world, pos);
             coyoteTime = 15;
-            produced = storage.forceReceiveEnergy(getRfProduced(), false);
+            int produced = getRfProduced();
             matterStored--;
+            // push produced energy
+            IEnergyStorage[] output = Arrays.stream(EnumFacing.values())
+                    .map(f -> new Pair<>(f, world.getTileEntity(pos.offset(f))))
+                    .filter(p -> p.getValue() != null)
+                    .map(p -> p.getValue().getCapability(CapabilityEnergy.ENERGY, p.getKey().getOpposite()))
+                    .filter(Objects::nonNull)
+                    .sorted(Comparator.comparingInt(e -> e.receiveEnergy(Integer.MAX_VALUE, true)))
+                    .toArray(IEnergyStorage[]::new);
+            for (int i = 0; i < output.length; i++) {
+                if (!world.isRemote)
+                    Main.logger.info("pushed " + output[i].receiveEnergy(produced / (output.length - i), true) + "RF to adjacent block!");
+                produced -= output[i].receiveEnergy(produced / (output.length - i), false);
+            }
         } else {
             if (coyoteTime > 1)
                 coyoteTime--;
@@ -104,20 +119,6 @@ public class TileEntitySauron extends TileEntity implements ITickable {
                 coyoteTime = 0;
             }
         }
-        // push energy
-        IEnergyStorage[] output = Arrays.stream(EnumFacing.values())
-                .map(f -> new Pair<>(f, world.getTileEntity(pos.offset(f))))
-                .filter(p -> p.getValue() != null)
-                .map(p -> p.getValue().getCapability(CapabilityEnergy.ENERGY, p.getKey().getOpposite()))
-                .filter(Objects::nonNull)
-                .sorted(Comparator.comparingInt(e -> e.receiveEnergy(Integer.MAX_VALUE, true)))
-                .toArray(IEnergyStorage[]::new);
-        int atHand = storage.extractEnergy(Integer.MAX_VALUE, false);
-        for (int i = 0; i < output.length; i++)
-            atHand -= output[i].receiveEnergy(atHand/ output.length - i, false);
-        storage.forceReceiveEnergy(atHand, false);
-        if (!world.isRemote && atHand < 0)
-            Main.logger.warn("atHand is negative: " + atHand);
     }
     public long getMatterYield(ItemStack stack) {
         if (stack.getItem().getRegistryName().toString().equals("avaritia:resource")) {
@@ -135,5 +136,23 @@ public class TileEntitySauron extends TileEntity implements ITickable {
 
     public boolean isUsableByPlayer(EntityPlayer player) {
         return world.getTileEntity(this.pos) == this && player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
+    }
+
+    // pair similar to javafx
+    private class Pair<K, V> {
+        private final K key;
+        private final V value;
+
+        public Pair(K key, V value) {
+            this.key = key;
+            this.value = value;
+        }
+
+        public K getKey() {
+            return key;
+        }
+        public V getValue() {
+            return value;
+        }
     }
 }
