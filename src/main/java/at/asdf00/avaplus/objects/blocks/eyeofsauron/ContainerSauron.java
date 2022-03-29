@@ -12,6 +12,7 @@ public class ContainerSauron extends Container {
     protected final InventoryPlayer player;
     protected final TileEntitySauron tileentity;
     protected int matterStoredCheck = 0;
+    protected int burnTimeCheck = 0;
 
     public ContainerSauron(InventoryPlayer player, TileEntitySauron tileentity) {
         this.player = player;
@@ -36,15 +37,24 @@ public class ContainerSauron extends Container {
     @Override
     public void detectAndSendChanges() {
         super.detectAndSendChanges();
-        for (IContainerListener listener : listeners)
+        for (IContainerListener listener : listeners) {
             if (matterStoredCheck != tileentity.matterStored)
                 listener.sendWindowProperty(this, 0, tileentity.matterStored);
+            if (burnTimeCheck != tileentity.burnTime)
+                listener.sendWindowProperty(this, 1, tileentity.burnTime);
+        }
         matterStoredCheck = tileentity.matterStored;
+        burnTimeCheck = tileentity.burnTime;
     }
     @Override
     public void updateProgressBar(int id, int data) {
-        if (id == 0) {
-            tileentity.matterStored = data;
+        switch (id) {
+            case 0:
+                tileentity.matterStored = data;
+                break;
+            case 1:
+                tileentity.burnTime = data;
+                break;
         }
     }
     @Override

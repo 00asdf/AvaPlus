@@ -22,10 +22,12 @@ import javax.annotation.Nullable;
 import java.util.*;
 
 public class TileEntitySauron extends TileEntity implements ITickable {
+    protected static final int ITEM_BURN_TIME = 5;
+
     public final ISHSauron handler;
     protected final EnergyStorage dummy;
     protected int matterStored;
-    protected List<EnergyStorage> adjacentEnergy;
+    protected int burnTime = 0;
 
     protected int coyoteTime = 0;
 
@@ -63,6 +65,7 @@ public class TileEntitySauron extends TileEntity implements ITickable {
         super.writeToNBT(compound);
         compound.setTag("Input", handler.serializeNBT());
         compound.setInteger("MatterStored", matterStored);
+        compound.setInteger("BurnTime", burnTime);
         return compound;
     }
     @Override
@@ -70,6 +73,7 @@ public class TileEntitySauron extends TileEntity implements ITickable {
         super.readFromNBT(compound);
         handler.deserializeNBT(compound.getCompoundTag("Input"));
         matterStored = compound.getInteger("MatterStored");
+        burnTime = compound.getInteger("BurnTime");
     }
     @Nullable
     @Override
@@ -88,9 +92,15 @@ public class TileEntitySauron extends TileEntity implements ITickable {
         if (!stack.isEmpty() &&
                 matterStored < ModConfig.SAURON_MATTER_CAPACITY &&
                 isValidInput(stack)) {
-            matterStored += getMatterYield(stack);
-            stack.shrink(1);
-        }
+            if (burnTime < ITEM_BURN_TIME)
+                burnTime++;
+            else {
+                matterStored += getMatterYield(stack);
+                stack.shrink(1);
+                burnTime = 0;
+            }
+        } else
+            burnTime = 0;
         // generate energy
         if (matterStored > 0) {
             if (coyoteTime == 0)
