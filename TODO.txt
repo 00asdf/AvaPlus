@@ -10,7 +10,6 @@ sourceSets {
 
 
 AvaPlus V1.1.x
--> new texture for black hole generator
 -> new gui for black hole generator
 -> slow item burning process bhg
 -> update example config

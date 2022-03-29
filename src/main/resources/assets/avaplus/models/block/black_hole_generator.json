@@ -1,12 +1,12 @@
 {
   "parent": "block/orientable",
   "textures": {
-    "particle": "avaplus:blocks/block_test",
-    "up": "avaplus:blocks/block_test",
-    "down": "avaplus:blocks/block_test",
-    "north": "avaplus:blocks/replicator_front_off",
-    "east": "avaplus:blocks/block_test",
-    "south": "avaplus:blocks/block_test",
-    "west": "avaplus:blocks/block_test"
+    "particle": "avaplus:blocks/bhg_top",
+    "up": "avaplus:blocks/bhg_top",
+    "down": "avaplus:blocks/bhg_top",
+    "north": "avaplus:blocks/bhg_side",
+    "east": "avaplus:blocks/bhg_side",
+    "south": "avaplus:blocks/bhg_side",
+    "west": "avaplus:blocks/bhg_side"
   }
 }

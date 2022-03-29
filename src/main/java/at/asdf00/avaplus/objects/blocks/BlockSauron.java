@@ -45,6 +45,10 @@ public class BlockSauron extends BlockBase {
     }
 
     @Override
+    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
+        return state.getValue(EMPTY) ? 0 : 15;
+    }
+    @Override
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, FACING, EMPTY);
     }
