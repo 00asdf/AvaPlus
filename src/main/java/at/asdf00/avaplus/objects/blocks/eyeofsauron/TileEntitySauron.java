@@ -1,8 +1,8 @@
 package at.asdf00.avaplus.objects.blocks.eyeofsauron;
 
-import at.asdf00.avaplus.Main;
 import at.asdf00.avaplus.ModConfig;
 import at.asdf00.avaplus.objects.blocks.BlockSauron;
+import at.asdf00.avaplus.util.ModLogger;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -30,6 +30,9 @@ public class TileEntitySauron extends TileEntity implements ITickable {
     protected int burnTime = 0;
 
     protected int coyoteTime = 0;
+
+    private int nsLogDelay = 0;
+    private long nsSum = 0;
 
     public TileEntitySauron() {
         handler = new ISHSauron(1);
@@ -109,6 +112,7 @@ public class TileEntitySauron extends TileEntity implements ITickable {
             int produced = getRfProduced();
             matterStored--;
             // push produced energy
+            long debugMs = System.nanoTime();
             IEnergyStorage[] output = Arrays.stream(EnumFacing.values())
                     .map(f -> new Pair<>(f, world.getTileEntity(pos.offset(f))))
                     .filter(p -> p.getValue() != null)
@@ -116,11 +120,16 @@ public class TileEntitySauron extends TileEntity implements ITickable {
                     .filter(Objects::nonNull)
                     .sorted(Comparator.comparingInt(e -> e.receiveEnergy(Integer.MAX_VALUE, true)))
                     .toArray(IEnergyStorage[]::new);
-            for (int i = 0; i < output.length; i++) {
-                if (!world.isRemote)
-                    Main.logger.info("pushed " + output[i].receiveEnergy(produced / (output.length - i), true) + "RF to adjacent block!");
-                produced -= output[i].receiveEnergy(produced / (output.length - i), false);
+            if (ModConfig.ENABLE_DEBUG_OUTPUT) {
+                nsSum += System.nanoTime() - debugMs;
+                if (nsLogDelay >= 6000) {
+                    ModLogger.info("Tick time taken up by BHG output sorting at position " + pos.toString() + " | 5min avg: " + (nsSum / 6000) + "ns", true);
+                    nsLogDelay = 0;
+                } else
+                    nsLogDelay++;
             }
+            for (int i = 0; i < output.length; i++)
+                produced -= output[i].receiveEnergy(produced / (output.length - i), false);
         } else {
             if (coyoteTime > 1)
                 coyoteTime--;

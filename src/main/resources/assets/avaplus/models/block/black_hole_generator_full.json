@@ -1,9 +1,9 @@
 {
   "parent": "block/orientable",
   "textures": {
-    "particle": "avaplus:blocks/bhg_top",
-    "up": "avaplus:blocks/bhg_top",
-    "down": "avaplus:blocks/bhg_top",
+    "particle": "avaplus:blocks/bhg_top_on",
+    "up": "avaplus:blocks/bhg_top_on",
+    "down": "avaplus:blocks/bhg_top_on",
     "north": "avaplus:blocks/bhg_side_on",
     "east": "avaplus:blocks/bhg_side_on",
     "south": "avaplus:blocks/bhg_side_on",

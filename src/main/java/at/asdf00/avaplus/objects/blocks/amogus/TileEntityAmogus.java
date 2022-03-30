@@ -4,6 +4,7 @@ import at.asdf00.avaplus.Main;
 import at.asdf00.avaplus.References;
 import at.asdf00.avaplus.objects.blocks.BlockAmogus;
 import at.asdf00.avaplus.ModConfig;
+import at.asdf00.avaplus.util.ModLogger;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -32,8 +33,7 @@ public class TileEntityAmogus extends TileEntity implements ITickable {
         handlerOut = new ISHAmogusOut(1);
     }
 
-    protected static final boolean _debugSelfFueling = References._DEBUGMODE;
-    protected static final int _debugSelfFuelingAmount = Integer.MAX_VALUE >> 5;
+    protected static final int _debugSelfFuelingAmount = Integer.MAX_VALUE >> 4;
 
     public long rfConsumed;
     public boolean active;
@@ -94,7 +94,7 @@ public class TileEntityAmogus extends TileEntity implements ITickable {
 
     @Override
     public void update() {
-        if (_debugSelfFueling) {
+        if (ModConfig.DEBUG_MODE) {
             if (world.isBlockPowered(pos))
                 storage.receiveEnergy(_debugSelfFuelingAmount, false);
         }
@@ -110,7 +110,7 @@ public class TileEntityAmogus extends TileEntity implements ITickable {
         if ((isValidInput(handlerIn.getStackInSlot(0)) || handlerIn.getStackInSlot(0).isEmpty()) && thrownWarning)
             thrownWarning = false;
         else if (!(isValidInput(handlerIn.getStackInSlot(0))  || handlerIn.getStackInSlot(0).isEmpty()) && !thrownWarning) {
-            Main.logger.warn("Replicator at " + pos.getX() + ", " + pos.getY() + ", " + pos.getZ() + " has invalid item " + handlerIn.getStackInSlot(0).getItem().getRegistryName() + " in its input slot!");
+            ModLogger.error("Replicator at " + pos.getX() + ", " + pos.getY() + ", " + pos.getZ() + " has invalid item " + handlerIn.getStackInSlot(0).getItem().getRegistryName() + " in its input slot!", false);
             thrownWarning = true;
         }
 

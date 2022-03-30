@@ -11,8 +11,6 @@ sourceSets {
 
 AvaPlus V1.1.x
 -> new gui for black hole generator
--> fix config file
--> update example config
 
 
 nice to have

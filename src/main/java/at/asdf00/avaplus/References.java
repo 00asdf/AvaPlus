@@ -11,6 +11,4 @@ public class References {
     public static final int AMOGUI = 0;
     public static final int AMOGUIT2 = 1;
     public static final int GUISAURON = 2;
-
-    public static final boolean _DEBUGMODE = true;
 }

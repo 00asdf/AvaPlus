@@ -1,13 +1,10 @@
 package at.asdf00.avaplus.util;
 
-import at.asdf00.avaplus.References;
-import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
 import java.io.File;
 
-@Config(modid = References.MODID)
 public class CustomConfig extends Configuration {
     public CustomConfig (File file) {
         super(file);

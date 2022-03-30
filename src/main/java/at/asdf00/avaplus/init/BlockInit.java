@@ -15,5 +15,5 @@ public class BlockInit {
     public static final Block AMOGUS = new BlockAmogus("replicator");
     public static final Block EYEOFSAURON = new BlockSauron("black_hole_generator");
 
-    public static final Block AMOGUST2 = new BlockAmogusT2("replicator_t2");
+    //public static final Block AMOGUST2 = new BlockAmogusT2("replicator_t2");
 }
